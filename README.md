@@ -9,6 +9,8 @@ Workflow n8n che legge l'archivio delle recensioni di un hotel e produce, senza 
 
 Le scelte progettuali, i limiti e la verifica su recensioni non usate durante lo sviluppo sono nella [relazione tecnica](RELAZIONE.md).
 
+**Il passo successivo.** Questo è il primo prototipo: un archivio di recensioni analizzato una volta. La versione per le app, che scarica da sola le recensioni da App Store e Google Play ogni settimana, manda avvisi su Telegram e controlla le recensioni coordinate, è nel repository [recensioni-app-n8n](https://github.com/aletafuro/recensioni-app-n8n).
+
 ## Cosa serve
 
 - **Docker** con Docker Compose (Docker Desktop su Windows e macOS). Non serve installare n8n: l'immagine `n8nio/n8n:2.29.10` viene scaricata al primo avvio.
