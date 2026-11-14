@@ -1,0 +1,4 @@
+.env
+data/prove/
+__pycache__/
+docker-compose.override.yml

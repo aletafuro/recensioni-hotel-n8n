@@ -1,0 +1,52 @@
+{
+  "inizio": "2026-11-13T08:27:37.645Z",
+  "fine": "2026-11-13T08:50:56.934Z",
+  "durata_minuti": 23.3,
+  "modello": "gpt-4.1-mini",
+  "prezzi_usd_per_milione_di_token": {
+    "input": 0.4,
+    "output": 1.6
+  },
+  "recensioni": 1927,
+  "versione_aspetti": "v2",
+  "misurato_per_fase": {
+    "scoperta_temi_liberi": {
+      "chiamate": 0,
+      "token_input": 0,
+      "token_output": 0,
+      "costo_usd": 0
+    },
+    "consolidamento_aspetti": {
+      "chiamate": 0,
+      "token_input": 0,
+      "token_output": 0,
+      "costo_usd": 0
+    },
+    "analisi_recensioni": {
+      "chiamate": 387,
+      "token_input": 1285428,
+      "token_output": 176023,
+      "costo_usd": 0.7958
+    },
+    "digest": {
+      "chiamate": 1,
+      "token_input": 9189,
+      "token_output": 791,
+      "costo_usd": 0.0049
+    }
+  },
+  "misurato_totale": {
+    "token_input": 1294617,
+    "token_output": 176814,
+    "costo_usd": 0.8007
+  },
+  "guardrail_stimato": {
+    "chiamate": 1928,
+    "token_input": 986782,
+    "token_output": 57840,
+    "nota": "STIMA: token calcolati dalla lunghezza dei testi, n8n non li espone per i nodi Guardrails",
+    "costo_usd": 0.4873
+  },
+  "costo_totale_usd_misurato_piu_stimato": 1.288,
+  "costo_per_1000_recensioni_usd": 0.6684
+}

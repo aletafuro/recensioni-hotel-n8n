@@ -1,0 +1,326 @@
+{
+  "id": "caricaGoldRec001",
+  "name": "Valutazione: carica gold set",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "nodes": [
+    {
+      "id": "s01",
+      "name": "Nota 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -140
+      ],
+      "parameters": {
+        "content": "## Carica il gold set\nCrea la Data Table usata dalla scheda Evaluations e ci copia data/valutazione/gold_set.csv. Si puo' rilanciare: la tabella viene ricreata da capo.",
+        "width": 1260,
+        "height": 330,
+        "color": 5
+      }
+    },
+    {
+      "id": "n02",
+      "name": "Avvia caricamento",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "n03",
+      "name": "Cancella tabella",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "resource": "table",
+        "operation": "delete",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "gold_set_recensioni"
+        }
+      },
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "id": "n04",
+      "name": "Crea tabella",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        400,
+        0
+      ],
+      "parameters": {
+        "resource": "table",
+        "operation": "create",
+        "tableName": "gold_set_recensioni",
+        "columns": {
+          "column": [
+            {
+              "name": "review_id",
+              "type": "string"
+            },
+            {
+              "name": "rating",
+              "type": "number"
+            },
+            {
+              "name": "title",
+              "type": "string"
+            },
+            {
+              "name": "text",
+              "type": "string"
+            },
+            {
+              "name": "language",
+              "type": "string"
+            },
+            {
+              "name": "overall_sentiment",
+              "type": "string"
+            },
+            {
+              "name": "aspects",
+              "type": "string"
+            },
+            {
+              "name": "attention_categories",
+              "type": "string"
+            },
+            {
+              "name": "sistema_overall_sentiment",
+              "type": "string"
+            },
+            {
+              "name": "sistema_language",
+              "type": "string"
+            },
+            {
+              "name": "sistema_aspects",
+              "type": "string"
+            },
+            {
+              "name": "sistema_categorie",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {
+          "createIfNotExists": true
+        }
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n05",
+      "name": "Leggi gold set (file)",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        600,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "/files/valutazione/gold_set.csv",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n06",
+      "name": "Righe del gold set",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ],
+      "parameters": {
+        "operation": "csv",
+        "options": {
+          "headerRow": true
+        }
+      },
+      "executeOnce": false
+    },
+    {
+      "id": "n07",
+      "name": "Inserisci righe",
+      "type": "n8n-nodes-base.dataTable",
+      "typeVersion": 1.1,
+      "position": [
+        1000,
+        0
+      ],
+      "parameters": {
+        "resource": "row",
+        "operation": "insert",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "name",
+          "value": "gold_set_recensioni"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "review_id": "={{ $json.review_id ?? '' }}",
+            "rating": "={{ Number($json.rating) }}",
+            "title": "={{ $json.title ?? '' }}",
+            "text": "={{ $json.text ?? '' }}",
+            "language": "={{ $json.language ?? '' }}",
+            "overall_sentiment": "={{ $json.overall_sentiment ?? '' }}",
+            "aspects": "={{ $json.aspects ?? '' }}",
+            "attention_categories": "={{ $json.attention_categories ?? '' }}"
+          },
+          "schema": [
+            {
+              "id": "review_id",
+              "displayName": "review_id",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "rating",
+              "displayName": "rating",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "number",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "title",
+              "displayName": "title",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "text",
+              "displayName": "text",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "language",
+              "displayName": "language",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "overall_sentiment",
+              "displayName": "overall_sentiment",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "aspects",
+              "displayName": "aspects",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            },
+            {
+              "id": "attention_categories",
+              "displayName": "attention_categories",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "type": "string",
+              "canBeUsedToMatch": true
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Avvia caricamento": {
+      "main": [
+        [
+          {
+            "node": "Cancella tabella",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Cancella tabella": {
+      "main": [
+        [
+          {
+            "node": "Crea tabella",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Crea tabella": {
+      "main": [
+        [
+          {
+            "node": "Leggi gold set (file)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi gold set (file)": {
+      "main": [
+        [
+          {
+            "node": "Righe del gold set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Righe del gold set": {
+      "main": [
+        [
+          {
+            "node": "Inserisci righe",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}

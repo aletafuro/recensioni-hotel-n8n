@@ -1,0 +1,155 @@
+periodo,recensioni_del_periodo,aspetto,nome_aspetto,menzioni,positive,negative,neutral,pct_recensioni_che_lo_apprezzano,pct_recensioni_che_lo_criticano
+2002-2008,124,location,Posizione,60,57,0,3,46,0
+2002-2008,124,staff_service,Personale e servizio,110,93,11,6,75,8.9
+2002-2008,124,room_quality_and_comfort,Qualità e comfort della camera,98,83,8,7,66.9,6.5
+2002-2008,124,room_view,Vista dalla camera,42,37,3,2,29.8,2.4
+2002-2008,124,bathroom,Bagno,43,42,1,0,33.9,0.8
+2002-2008,124,cleanliness,Pulizia,14,10,4,0,8.1,3.2
+2002-2008,124,food_and_beverage,Cibo e bevande,41,26,11,4,21,8.9
+2002-2008,124,club_lounge,Club lounge,22,18,4,0,14.5,3.2
+2002-2008,124,price_and_value,Prezzo e valore,29,3,20,6,2.4,16.1
+2002-2008,124,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,36,26,5,5,21,4
+2002-2008,124,spa_and_wellness,Spa e benessere,17,16,1,0,12.9,0.8
+2002-2008,124,check_in_and_check_out,Check-in e check-out,11,9,1,1,7.3,0.8
+2002-2008,124,noise_and_soundproofing,Rumore e insonorizzazione,8,6,2,0,4.8,1.6
+2002-2008,124,wifi_and_technology,Wi-Fi e tecnologia,3,2,1,0,1.6,0.8
+2009-2011,158,location,Posizione,97,94,0,3,59.5,0
+2009-2011,158,staff_service,Personale e servizio,137,121,8,8,76.6,5.1
+2009-2011,158,room_quality_and_comfort,Qualità e comfort della camera,112,96,8,8,60.8,5.1
+2009-2011,158,room_view,Vista dalla camera,42,34,5,3,21.5,3.2
+2009-2011,158,bathroom,Bagno,21,20,0,1,12.7,0
+2009-2011,158,cleanliness,Pulizia,14,12,2,0,7.6,1.3
+2009-2011,158,food_and_beverage,Cibo e bevande,48,35,10,3,22.2,6.3
+2009-2011,158,club_lounge,Club lounge,44,39,3,2,24.7,1.9
+2009-2011,158,price_and_value,Prezzo e valore,27,6,17,4,3.8,10.8
+2009-2011,158,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,34,30,4,0,19,2.5
+2009-2011,158,spa_and_wellness,Spa e benessere,19,15,2,2,9.5,1.3
+2009-2011,158,check_in_and_check_out,Check-in e check-out,12,7,5,0,4.4,3.2
+2009-2011,158,noise_and_soundproofing,Rumore e insonorizzazione,10,4,4,2,2.5,2.5
+2009-2011,158,wifi_and_technology,Wi-Fi e tecnologia,12,6,6,0,3.8,3.8
+2012,134,location,Posizione,95,90,2,3,67.2,1.5
+2012,134,staff_service,Personale e servizio,121,100,16,5,74.6,11.9
+2012,134,room_quality_and_comfort,Qualità e comfort della camera,91,80,8,3,59.7,6
+2012,134,room_view,Vista dalla camera,45,39,4,2,29.1,3
+2012,134,bathroom,Bagno,19,17,2,0,12.7,1.5
+2012,134,cleanliness,Pulizia,15,11,4,0,8.2,3
+2012,134,food_and_beverage,Cibo e bevande,33,20,12,1,14.9,9
+2012,134,club_lounge,Club lounge,43,33,9,1,24.6,6.7
+2012,134,price_and_value,Prezzo e valore,25,9,13,3,6.7,9.7
+2012,134,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,35,28,6,1,20.9,4.5
+2012,134,spa_and_wellness,Spa e benessere,15,11,2,2,8.2,1.5
+2012,134,check_in_and_check_out,Check-in e check-out,9,4,4,1,3,3
+2012,134,noise_and_soundproofing,Rumore e insonorizzazione,5,4,1,0,3,0.7
+2012,134,wifi_and_technology,Wi-Fi e tecnologia,2,2,0,0,1.5,0
+2013,131,location,Posizione,76,76,0,0,58,0
+2013,131,staff_service,Personale e servizio,119,104,11,4,79.4,8.4
+2013,131,room_quality_and_comfort,Qualità e comfort della camera,88,73,10,5,55.7,7.6
+2013,131,room_view,Vista dalla camera,47,37,8,2,28.2,6.1
+2013,131,bathroom,Bagno,19,17,2,0,13,1.5
+2013,131,cleanliness,Pulizia,10,9,1,0,6.9,0.8
+2013,131,food_and_beverage,Cibo e bevande,44,33,9,2,25.2,6.9
+2013,131,club_lounge,Club lounge,27,22,4,1,16.8,3.1
+2013,131,price_and_value,Prezzo e valore,23,7,11,5,5.3,8.4
+2013,131,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,33,27,4,2,20.6,3.1
+2013,131,spa_and_wellness,Spa e benessere,11,10,0,1,7.6,0
+2013,131,check_in_and_check_out,Check-in e check-out,10,6,3,1,4.6,2.3
+2013,131,noise_and_soundproofing,Rumore e insonorizzazione,10,8,1,1,6.1,0.8
+2013,131,wifi_and_technology,Wi-Fi e tecnologia,4,2,2,0,1.5,1.5
+2014,162,location,Posizione,100,99,0,1,61.1,0
+2014,162,staff_service,Personale e servizio,147,126,18,3,77.8,11.1
+2014,162,room_quality_and_comfort,Qualità e comfort della camera,107,92,8,7,56.8,4.9
+2014,162,room_view,Vista dalla camera,55,44,10,1,27.2,6.2
+2014,162,bathroom,Bagno,25,21,2,2,13,1.2
+2014,162,cleanliness,Pulizia,9,9,0,0,5.6,0
+2014,162,food_and_beverage,Cibo e bevande,47,34,10,3,21,6.2
+2014,162,club_lounge,Club lounge,42,36,4,2,22.2,2.5
+2014,162,price_and_value,Prezzo e valore,26,8,12,6,4.9,7.4
+2014,162,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,40,33,6,1,20.4,3.7
+2014,162,spa_and_wellness,Spa e benessere,11,8,1,2,4.9,0.6
+2014,162,check_in_and_check_out,Check-in e check-out,7,5,2,0,3.1,1.2
+2014,162,noise_and_soundproofing,Rumore e insonorizzazione,10,6,2,2,3.7,1.2
+2014,162,wifi_and_technology,Wi-Fi e tecnologia,5,1,4,0,0.6,2.5
+2015,237,location,Posizione,153,152,1,0,64.1,0.4
+2015,237,staff_service,Personale e servizio,211,192,15,4,81,6.3
+2015,237,room_quality_and_comfort,Qualità e comfort della camera,158,130,18,10,54.9,7.6
+2015,237,room_view,Vista dalla camera,73,68,3,2,28.7,1.3
+2015,237,bathroom,Bagno,33,33,0,0,13.9,0
+2015,237,cleanliness,Pulizia,21,18,3,0,7.6,1.3
+2015,237,food_and_beverage,Cibo e bevande,74,48,18,8,20.3,7.6
+2015,237,club_lounge,Club lounge,53,34,15,4,14.3,6.3
+2015,237,price_and_value,Prezzo e valore,31,4,22,5,1.7,9.3
+2015,237,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,64,56,5,3,23.6,2.1
+2015,237,spa_and_wellness,Spa e benessere,23,18,2,3,7.6,0.8
+2015,237,check_in_and_check_out,Check-in e check-out,16,13,2,1,5.5,0.8
+2015,237,noise_and_soundproofing,Rumore e insonorizzazione,16,11,5,0,4.6,2.1
+2015,237,wifi_and_technology,Wi-Fi e tecnologia,16,6,10,0,2.5,4.2
+2016,256,location,Posizione,148,146,1,1,57,0.4
+2016,256,staff_service,Personale e servizio,225,194,21,10,75.8,8.2
+2016,256,room_quality_and_comfort,Qualità e comfort della camera,152,115,25,12,44.9,9.8
+2016,256,room_view,Vista dalla camera,64,53,9,2,20.7,3.5
+2016,256,bathroom,Bagno,30,25,5,0,9.8,2
+2016,256,cleanliness,Pulizia,22,21,1,0,8.2,0.4
+2016,256,food_and_beverage,Cibo e bevande,84,54,21,9,21.1,8.2
+2016,256,club_lounge,Club lounge,46,28,15,3,10.9,5.9
+2016,256,price_and_value,Prezzo e valore,37,4,27,6,1.6,10.5
+2016,256,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,67,56,10,1,21.9,3.9
+2016,256,spa_and_wellness,Spa e benessere,21,18,0,3,7,0
+2016,256,check_in_and_check_out,Check-in e check-out,19,15,2,2,5.9,0.8
+2016,256,noise_and_soundproofing,Rumore e insonorizzazione,14,9,4,1,3.5,1.6
+2016,256,wifi_and_technology,Wi-Fi e tecnologia,10,4,6,0,1.6,2.3
+2017,363,location,Posizione,207,203,2,2,55.9,0.6
+2017,363,staff_service,Personale e servizio,310,278,28,4,76.6,7.7
+2017,363,room_quality_and_comfort,Qualità e comfort della camera,161,119,29,13,32.8,8
+2017,363,room_view,Vista dalla camera,85,79,5,1,21.8,1.4
+2017,363,bathroom,Bagno,20,16,3,1,4.4,0.8
+2017,363,cleanliness,Pulizia,25,22,3,0,6.1,0.8
+2017,363,food_and_beverage,Cibo e bevande,92,62,25,5,17.1,6.9
+2017,363,club_lounge,Club lounge,59,51,7,1,14,1.9
+2017,363,price_and_value,Prezzo e valore,37,4,24,9,1.1,6.6
+2017,363,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,101,81,15,5,22.3,4.1
+2017,363,spa_and_wellness,Spa e benessere,24,21,2,1,5.8,0.6
+2017,363,check_in_and_check_out,Check-in e check-out,19,15,3,1,4.1,0.8
+2017,363,noise_and_soundproofing,Rumore e insonorizzazione,20,16,4,0,4.4,1.1
+2017,363,wifi_and_technology,Wi-Fi e tecnologia,13,3,10,0,0.8,2.8
+2018,133,location,Posizione,75,75,0,0,56.4,0
+2018,133,staff_service,Personale e servizio,121,101,14,6,75.9,10.5
+2018,133,room_quality_and_comfort,Qualità e comfort della camera,92,75,11,6,56.4,8.3
+2018,133,room_view,Vista dalla camera,35,28,7,0,21.1,5.3
+2018,133,bathroom,Bagno,25,18,7,0,13.5,5.3
+2018,133,cleanliness,Pulizia,14,11,3,0,8.3,2.3
+2018,133,food_and_beverage,Cibo e bevande,29,24,3,2,18,2.3
+2018,133,club_lounge,Club lounge,18,13,4,1,9.8,3
+2018,133,price_and_value,Prezzo e valore,19,4,13,2,3,9.8
+2018,133,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,35,29,1,5,21.8,0.8
+2018,133,spa_and_wellness,Spa e benessere,4,4,0,0,3,0
+2018,133,check_in_and_check_out,Check-in e check-out,11,7,4,0,5.3,3
+2018,133,noise_and_soundproofing,Rumore e insonorizzazione,16,8,8,0,6,6
+2018,133,wifi_and_technology,Wi-Fi e tecnologia,6,3,3,0,2.3,2.3
+2019,103,location,Posizione,49,49,0,0,47.6,0
+2019,103,staff_service,Personale e servizio,89,73,14,2,70.9,13.6
+2019,103,room_quality_and_comfort,Qualità e comfort della camera,71,55,13,3,53.4,12.6
+2019,103,room_view,Vista dalla camera,37,29,6,2,28.2,5.8
+2019,103,bathroom,Bagno,19,16,3,0,15.5,2.9
+2019,103,cleanliness,Pulizia,5,5,0,0,4.9,0
+2019,103,food_and_beverage,Cibo e bevande,27,18,8,1,17.5,7.8
+2019,103,club_lounge,Club lounge,25,18,6,1,17.5,5.8
+2019,103,price_and_value,Prezzo e valore,18,8,8,2,7.8,7.8
+2019,103,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,30,26,4,0,25.2,3.9
+2019,103,spa_and_wellness,Spa e benessere,11,10,0,1,9.7,0
+2019,103,check_in_and_check_out,Check-in e check-out,6,2,3,1,1.9,2.9
+2019,103,noise_and_soundproofing,Rumore e insonorizzazione,3,1,2,0,1,1.9
+2019,103,wifi_and_technology,Wi-Fi e tecnologia,1,0,1,0,0,1
+2020-2024,126,location,Posizione,60,58,2,0,46,1.6
+2020-2024,126,staff_service,Personale e servizio,102,64,32,6,50.8,25.4
+2020-2024,126,room_quality_and_comfort,Qualità e comfort della camera,83,46,30,7,36.5,23.8
+2020-2024,126,room_view,Vista dalla camera,38,27,9,2,21.4,7.1
+2020-2024,126,bathroom,Bagno,23,9,11,3,7.1,8.7
+2020-2024,126,cleanliness,Pulizia,18,10,7,1,7.9,5.6
+2020-2024,126,food_and_beverage,Cibo e bevande,47,17,23,7,13.5,18.3
+2020-2024,126,club_lounge,Club lounge,15,11,3,1,8.7,2.4
+2020-2024,126,price_and_value,Prezzo e valore,34,1,31,2,0.8,24.6
+2020-2024,126,hotel_facilities_and_ambience,Strutture e atmosfera dell'hotel,27,16,10,1,12.7,7.9
+2020-2024,126,spa_and_wellness,Spa e benessere,7,7,0,0,5.6,0
+2020-2024,126,check_in_and_check_out,Check-in e check-out,13,2,10,1,1.6,7.9
+2020-2024,126,noise_and_soundproofing,Rumore e insonorizzazione,12,7,5,0,5.6,4
+2020-2024,126,wifi_and_technology,Wi-Fi e tecnologia,1,0,1,0,0,0.8

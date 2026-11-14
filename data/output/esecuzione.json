@@ -1,0 +1,1216 @@
+{
+  "configurazione": {
+    "input_file": "/files/input/ritz_carlton_reviews.csv",
+    "context_file": "/files/contesto/contesto.json",
+    "output_dir": "/files/output",
+    "model": "gpt-4.1-mini",
+    "base_url": "https://api.openai.com/v1",
+    "limit": 0,
+    "batch_size": 5,
+    "discovery_sample": 240,
+    "min_reviews_per_period": 100,
+    "aspects_file": "/files/aspetti/aspetti_fissi.json",
+    "riscopri_aspetti": false,
+    "min_mentions_rate_ranking": 30,
+    "prezzo_input_usd_per_milione": 0.4,
+    "prezzo_output_usd_per_milione": 1.6,
+    "seed": 42,
+    "started_at": "2026-11-13T08:27:37.645Z"
+  },
+  "terminata_il": "2026-11-13T08:50:56.911Z",
+  "file": "1927 righe lette da /files/input/ritz_carlton_reviews.csv",
+  "anomalie_del_file": [
+    {
+      "riga": 727,
+      "review_id": "R866f353f71",
+      "tipo": "soggiorno_dopo_pubblicazione",
+      "dettaglio": "2017-01 > 2016-12-31"
+    },
+    {
+      "riga": 1491,
+      "review_id": "R3c25bd553b",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1889,
+      "review_id": "R76131d29ea",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1891,
+      "review_id": "R3c1a610ec2",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1893,
+      "review_id": "R80569e7020",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1899,
+      "review_id": "R585f5452f4",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1900,
+      "review_id": "R12a8e1c129",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1901,
+      "review_id": "R69f1a9806d",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1902,
+      "review_id": "Rf96f28886f",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1903,
+      "review_id": "Reb95dda806",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1904,
+      "review_id": "R325bcb1d80",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1905,
+      "review_id": "Rd8f2d87e06",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1906,
+      "review_id": "R27289c899b",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1907,
+      "review_id": "Rac2c7f35c4",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1909,
+      "review_id": "R53fc4be3d9",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1910,
+      "review_id": "R00e280fc4b",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1911,
+      "review_id": "R45aaaefc53",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1912,
+      "review_id": "Rd929ee9aa8",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1913,
+      "review_id": "R206fe0d53d",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1914,
+      "review_id": "R12bcd84f63",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1916,
+      "review_id": "R9a411b56e2",
+      "tipo": "soggiorno_dopo_pubblicazione",
+      "dettaglio": "2005-01 > 2004-03-23"
+    },
+    {
+      "riga": 1917,
+      "review_id": "R1fee741017",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1918,
+      "review_id": "Rbae85d4074",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1919,
+      "review_id": "Ree20f59001",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1921,
+      "review_id": "R05d1f5d1a2",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1922,
+      "review_id": "Raf37986c6d",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1923,
+      "review_id": "Rc09e74e614",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1924,
+      "review_id": "R798cf79f6b",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1925,
+      "review_id": "R0154a93526",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1926,
+      "review_id": "R67083e15a5",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1927,
+      "review_id": "R6032314bae",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    },
+    {
+      "riga": 1928,
+      "review_id": "R0b4441ce2c",
+      "tipo": "data_soggiorno_mancante",
+      "dettaglio": null
+    }
+  ],
+  "guardrail_ingresso": {
+    "dati_oscurati_prima_del_modello": {},
+    "recensioni_con_dati_oscurati": [],
+    "recensioni_sospette_di_manipolazione": [],
+    "errori_del_guardrail": []
+  },
+  "scoperta_aspetti": {
+    "origine": "elenco fisso",
+    "versione": "v2",
+    "recensioni_nel_campione": 0,
+    "campione": [],
+    "temi_liberi_distinti": 0,
+    "temi_piu_frequenti": [],
+    "copertura_temi_pct": null,
+    "soglia_temi_frequenti": null,
+    "giri_di_consolidamento": [
+      {
+        "origine": "elenco fisso",
+        "versione": "v2"
+      }
+    ],
+    "temi_tolti_perche_doppi": [],
+    "temi_non_coperti": []
+  },
+  "analisi": {
+    "richieste_primo_giro": 386,
+    "uso_token_ritentativi": [
+      {
+        "prompt_tokens": 2577,
+        "completion_tokens": 103,
+        "total_tokens": 2680,
+        "prompt_tokens_details": {
+          "cached_tokens": 1920,
+          "audio_tokens": 0
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 0,
+          "audio_tokens": 0,
+          "accepted_prediction_tokens": 0,
+          "rejected_prediction_tokens": 0
+        }
+      }
+    ],
+    "risposte_non_valide": 0,
+    "recensioni_ritentate": [
+      "Rd8f5d4414b"
+    ],
+    "recensioni_fallite": [],
+    "aspetti_non_ammessi_scartati": 0,
+    "segnalazioni_scartate_senza_prova": [],
+    "recensioni_con_temi_fuori_elenco": 1262,
+    "temi_fuori_elenco_piu_frequenti": [
+      {
+        "tema": "birthday celebration",
+        "recensioni": 29
+      },
+      {
+        "tema": "birthday surprise",
+        "recensioni": 16
+      },
+      {
+        "tema": "amenities",
+        "recensioni": 16
+      },
+      {
+        "tema": "turn down service",
+        "recensioni": 15
+      },
+      {
+        "tema": "car service",
+        "recensioni": 13
+      },
+      {
+        "tema": "bartender",
+        "recensioni": 13
+      },
+      {
+        "tema": "bar atmosphere",
+        "recensioni": 13
+      },
+      {
+        "tema": "atmosphere",
+        "recensioni": 13
+      },
+      {
+        "tema": "shopping",
+        "recensioni": 13
+      },
+      {
+        "tema": "security",
+        "recensioni": 12
+      },
+      {
+        "tema": "lobby bar",
+        "recensioni": 12
+      },
+      {
+        "tema": "champagne",
+        "recensioni": 11
+      },
+      {
+        "tema": "anniversary celebration",
+        "recensioni": 10
+      },
+      {
+        "tema": "personalized service",
+        "recensioni": 9
+      },
+      {
+        "tema": "family friendly",
+        "recensioni": 9
+      },
+      {
+        "tema": "special occasion",
+        "recensioni": 9
+      },
+      {
+        "tema": "valet parking",
+        "recensioni": 8
+      },
+      {
+        "tema": "valet service",
+        "recensioni": 8
+      },
+      {
+        "tema": "business trip",
+        "recensioni": 8
+      },
+      {
+        "tema": "house car",
+        "recensioni": 7
+      },
+      {
+        "tema": "customer service",
+        "recensioni": 7
+      },
+      {
+        "tema": "family friendliness",
+        "recensioni": 7
+      },
+      {
+        "tema": "celebrity presence",
+        "recensioni": 7
+      },
+      {
+        "tema": "bar experience",
+        "recensioni": 7
+      },
+      {
+        "tema": "attention to detail",
+        "recensioni": 7
+      },
+      {
+        "tema": "anniversary surprise",
+        "recensioni": 7
+      },
+      {
+        "tema": "limousine service",
+        "recensioni": 6
+      },
+      {
+        "tema": "family stay",
+        "recensioni": 6
+      },
+      {
+        "tema": "wedding anniversary",
+        "recensioni": 6
+      },
+      {
+        "tema": "high tea",
+        "recensioni": 6
+      }
+    ]
+  },
+  "digest": {
+    "origine": "modello",
+    "guardrail_uscita": "superato",
+    "verifica": {
+      "tentativi": [
+        {
+          "tentativo": 1,
+          "ok": true,
+          "problemi": []
+        }
+      ],
+      "esito_finale": {
+        "ok": true,
+        "problemi": []
+      }
+    },
+    "testo_del_modello_scartato": null
+  },
+  "fatti_dati_al_modello_per_il_digest": {
+    "frase_sintesi": "Sono state analizzate 1.927 recensioni pubblicate dal 2002 al 2024. Il voto medio e' 4,51 su 5. Il 73% delle recensioni e' positivo, il 18% misto, l'8% negativo e lo 0,2% neutro.",
+    "recensioni_analizzate": "1.927",
+    "dal_anno": "2002",
+    "al_anno": "2024",
+    "escluse_dai_conteggi": {
+      "duplicati": 0,
+      "vuote": 0,
+      "analisi_fallita": 0,
+      "sospette_di_manipolazione": 0
+    },
+    "aspetti_piu_apprezzati": [
+      {
+        "aspetto": "Personale e servizio",
+        "frase_numeri": "1.446 recensioni su 1.927 ne danno un giudizio positivo (il 75% del totale); tra le 1.692 recensioni che ne parlano, i giudizi positivi sono l'86%"
+      },
+      {
+        "aspetto": "Posizione",
+        "frase_numeri": "1.099 recensioni su 1.927 ne danno un giudizio positivo (il 57% del totale); tra le 1.120 recensioni che ne parlano, i giudizi positivi sono il 98%"
+      },
+      {
+        "aspetto": "Qualità e comfort della camera",
+        "frase_numeri": "964 recensioni su 1.927 ne danno un giudizio positivo (il 50% del totale); tra le 1.213 recensioni che ne parlano, i giudizi positivi sono l'80%"
+      },
+      {
+        "aspetto": "Vista dalla camera",
+        "frase_numeri": "475 recensioni su 1.927 ne danno un giudizio positivo (il 25% del totale); tra le 563 recensioni che ne parlano, i giudizi positivi sono l'84%"
+      },
+      {
+        "aspetto": "Strutture e atmosfera dell'hotel",
+        "frase_numeri": "408 recensioni su 1.927 ne danno un giudizio positivo (il 21% del totale); tra le 502 recensioni che ne parlano, i giudizi positivi sono l'81%"
+      }
+    ],
+    "aspetti_piu_criticati": [
+      {
+        "aspetto": "Prezzo e valore",
+        "frase_numeri": "198 recensioni su 1.927 ne danno un giudizio negativo (il 10% del totale); tra le 306 recensioni che ne parlano, i giudizi negativi sono il 65%"
+      },
+      {
+        "aspetto": "Personale e servizio",
+        "frase_numeri": "188 recensioni su 1.927 ne danno un giudizio negativo (il 10% del totale); tra le 1.692 recensioni che ne parlano, i giudizi negativi sono l'11%"
+      },
+      {
+        "aspetto": "Qualità e comfort della camera",
+        "frase_numeri": "168 recensioni su 1.927 ne danno un giudizio negativo (il 9% del totale); tra le 1.213 recensioni che ne parlano, i giudizi negativi sono il 14%"
+      },
+      {
+        "aspetto": "Cibo e bevande",
+        "frase_numeri": "150 recensioni su 1.927 ne danno un giudizio negativo (l'8% del totale); tra le 566 recensioni che ne parlano, i giudizi negativi sono il 27%"
+      },
+      {
+        "aspetto": "Club lounge",
+        "frase_numeri": "74 recensioni su 1.927 ne danno un giudizio negativo (il 4% del totale); tra le 394 recensioni che ne parlano, i giudizi negativi sono il 19%"
+      }
+    ],
+    "aspetti_piu_divisivi": [
+      {
+        "aspetto": "Prezzo e valore",
+        "frase_numeri": "tra le 306 recensioni che ne parlano, i giudizi negativi sono il 65%"
+      },
+      {
+        "aspetto": "Wi-Fi e tecnologia",
+        "frase_numeri": "tra le 73 recensioni che ne parlano, i giudizi negativi sono il 60%"
+      },
+      {
+        "aspetto": "Rumore e insonorizzazione",
+        "frase_numeri": "tra le 124 recensioni che ne parlano, i giudizi negativi sono il 31%"
+      }
+    ],
+    "periodi": [
+      {
+        "periodo": "2002-2008",
+        "frase_numeri": "nel periodo 2002-2008 (124 recensioni) il voto medio e' 4,53 su 5, con il 73% di recensioni positive e l'11% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Qualità e comfort della camera",
+          "Posizione"
+        ],
+        "piu_criticati": [
+          "Prezzo e valore",
+          "Personale e servizio",
+          "Cibo e bevande"
+        ]
+      },
+      {
+        "periodo": "2009-2011",
+        "frase_numeri": "nel periodo 2009-2011 (158 recensioni) il voto medio e' 4,7 su 5, con il 75% di recensioni positive e il 4% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Qualità e comfort della camera",
+          "Posizione"
+        ],
+        "piu_criticati": [
+          "Prezzo e valore",
+          "Cibo e bevande",
+          "Personale e servizio"
+        ]
+      },
+      {
+        "periodo": "2012",
+        "frase_numeri": "nel periodo 2012 (134 recensioni) il voto medio e' 4,57 su 5, con il 71% di recensioni positive e l'8% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Posizione",
+          "Qualità e comfort della camera"
+        ],
+        "piu_criticati": [
+          "Personale e servizio",
+          "Prezzo e valore",
+          "Cibo e bevande"
+        ]
+      },
+      {
+        "periodo": "2013",
+        "frase_numeri": "nel periodo 2013 (131 recensioni) il voto medio e' 4,6 su 5, con il 75% di recensioni positive e il 5% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Posizione",
+          "Qualità e comfort della camera"
+        ],
+        "piu_criticati": [
+          "Personale e servizio",
+          "Prezzo e valore",
+          "Qualità e comfort della camera"
+        ]
+      },
+      {
+        "periodo": "2014",
+        "frase_numeri": "nel periodo 2014 (162 recensioni) il voto medio e' 4,62 su 5, con il 75% di recensioni positive e il 6% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Posizione",
+          "Qualità e comfort della camera"
+        ],
+        "piu_criticati": [
+          "Personale e servizio",
+          "Prezzo e valore",
+          "Vista dalla camera"
+        ]
+      },
+      {
+        "periodo": "2015",
+        "frase_numeri": "nel periodo 2015 (237 recensioni) il voto medio e' 4,63 su 5, con il 75% di recensioni positive e il 3% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Posizione",
+          "Qualità e comfort della camera"
+        ],
+        "piu_criticati": [
+          "Prezzo e valore",
+          "Qualità e comfort della camera",
+          "Cibo e bevande"
+        ]
+      },
+      {
+        "periodo": "2016",
+        "frase_numeri": "nel periodo 2016 (256 recensioni) il voto medio e' 4,5 su 5, con il 77% di recensioni positive e il 9% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Posizione",
+          "Qualità e comfort della camera"
+        ],
+        "piu_criticati": [
+          "Prezzo e valore",
+          "Qualità e comfort della camera",
+          "Personale e servizio"
+        ]
+      },
+      {
+        "periodo": "2017",
+        "frase_numeri": "nel periodo 2017 (363 recensioni) il voto medio e' 4,63 su 5, con il 78% di recensioni positive e il 6% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Posizione",
+          "Qualità e comfort della camera"
+        ],
+        "piu_criticati": [
+          "Qualità e comfort della camera",
+          "Personale e servizio",
+          "Cibo e bevande"
+        ]
+      },
+      {
+        "periodo": "2018",
+        "frase_numeri": "nel periodo 2018 (133 recensioni) il voto medio e' 4,44 su 5, con il 71% di recensioni positive e il 10% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Qualità e comfort della camera",
+          "Posizione"
+        ],
+        "piu_criticati": [
+          "Personale e servizio",
+          "Prezzo e valore",
+          "Qualità e comfort della camera"
+        ]
+      },
+      {
+        "periodo": "2019",
+        "frase_numeri": "nel periodo 2019 (103 recensioni) il voto medio e' 4,39 su 5, con il 70% di recensioni positive e il 13% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Qualità e comfort della camera",
+          "Posizione"
+        ],
+        "piu_criticati": [
+          "Personale e servizio",
+          "Qualità e comfort della camera",
+          "Cibo e bevande"
+        ]
+      },
+      {
+        "periodo": "2020-2024",
+        "frase_numeri": "nel periodo 2020-2024 (126 recensioni) il voto medio e' 3,61 su 5, con il 48% di recensioni positive e il 32% di negative",
+        "piu_apprezzati": [
+          "Personale e servizio",
+          "Posizione",
+          "Qualità e comfort della camera"
+        ],
+        "piu_criticati": [
+          "Personale e servizio",
+          "Prezzo e valore",
+          "Qualità e comfort della camera"
+        ]
+      }
+    ],
+    "cambiamenti_significativi": [
+      {
+        "aspetto": "Posizione",
+        "frase_numeri": "Posizione, dal 2002-2019 al 2020-2024: le recensioni con giudizio positivo passano dal 58% al 46%"
+      },
+      {
+        "aspetto": "Personale e servizio",
+        "frase_numeri": "Personale e servizio, dal 2002-2019 al 2020-2024: le recensioni con giudizio positivo passano dal 77% al 51% e le recensioni con giudizio negativo passano dal 9% al 25%"
+      },
+      {
+        "aspetto": "Qualità e comfort della camera",
+        "frase_numeri": "Qualità e comfort della camera, dal 2002-2019 al 2020-2024: le recensioni con giudizio positivo passano dal 51% al 37% e le recensioni con giudizio negativo passano dall'8% al 24%"
+      },
+      {
+        "aspetto": "Vista dalla camera",
+        "frase_numeri": "Vista dalla camera, dal 2002-2019 al 2020-2024: le recensioni con giudizio negativo passano dal 3% al 7%"
+      },
+      {
+        "aspetto": "Bagno",
+        "frase_numeri": "Bagno, dal 2002-2019 al 2020-2024: le recensioni con giudizio negativo passano dall'1% al 9%"
+      },
+      {
+        "aspetto": "Pulizia",
+        "frase_numeri": "Pulizia, dal 2002-2019 al 2020-2024: le recensioni con giudizio negativo passano dall'1% al 6%"
+      },
+      {
+        "aspetto": "Cibo e bevande",
+        "frase_numeri": "Cibo e bevande, dal 2002-2019 al 2020-2024: le recensioni con giudizio negativo passano dal 7% al 18%"
+      },
+      {
+        "aspetto": "Club lounge",
+        "frase_numeri": "Club lounge, dal 2002-2019 al 2020-2024: le recensioni con giudizio positivo passano dal 16% al 9%"
+      },
+      {
+        "aspetto": "Prezzo e valore",
+        "frase_numeri": "Prezzo e valore, dal 2002-2019 al 2020-2024: le recensioni con giudizio negativo passano dal 9% al 25%"
+      },
+      {
+        "aspetto": "Strutture e atmosfera dell'hotel",
+        "frase_numeri": "Strutture e atmosfera dell'hotel, dal 2002-2019 al 2020-2024: le recensioni con giudizio positivo passano dal 22% al 13% e le recensioni con giudizio negativo passano dal 3% all'8%"
+      },
+      {
+        "aspetto": "Check-in e check-out",
+        "frase_numeri": "Check-in e check-out, dal 2002-2019 al 2020-2024: le recensioni con giudizio negativo passano dal 2% all'8%"
+      },
+      {
+        "aspetto": "Personale e servizio",
+        "frase_numeri": "Personale e servizio, dal 2019 al 2020-2024: le recensioni con giudizio positivo passano dal 71% al 51% e le recensioni con giudizio negativo passano dal 14% al 25%"
+      },
+      {
+        "aspetto": "Qualità e comfort della camera",
+        "frase_numeri": "Qualità e comfort della camera, dal 2019 al 2020-2024: le recensioni con giudizio positivo passano dal 53% al 37% e le recensioni con giudizio negativo passano dal 13% al 24%"
+      },
+      {
+        "aspetto": "Bagno",
+        "frase_numeri": "Bagno, dal 2019 al 2020-2024: le recensioni con giudizio positivo passano dal 16% al 7%"
+      },
+      {
+        "aspetto": "Cibo e bevande",
+        "frase_numeri": "Cibo e bevande, dal 2019 al 2020-2024: le recensioni con giudizio negativo passano dall'8% al 18%"
+      },
+      {
+        "aspetto": "Club lounge",
+        "frase_numeri": "Club lounge, dal 2019 al 2020-2024: le recensioni con giudizio positivo passano dal 18% al 9%"
+      },
+      {
+        "aspetto": "Prezzo e valore",
+        "frase_numeri": "Prezzo e valore, dal 2019 al 2020-2024: le recensioni con giudizio negativo passano dall'8% al 25%"
+      },
+      {
+        "aspetto": "Strutture e atmosfera dell'hotel",
+        "frase_numeri": "Strutture e atmosfera dell'hotel, dal 2019 al 2020-2024: le recensioni con giudizio positivo passano dal 25% al 13%"
+      }
+    ],
+    "confronti_nel_tempo_eseguiti": "45",
+    "confronti_nel_tempo_significativi": "23",
+    "frase_segnalate": "Le recensioni segnalate sono 266 (il 14% del totale): 43 con priorita' alta, 192 media e 31 bassa.",
+    "segnalate_da_mostrare": [
+      {
+        "review_id": "Raa6ca3aa81",
+        "data": "2023-03-17",
+        "voto": "1 su 5",
+        "priorita": "alta",
+        "motivo": "igiene e salute: Tappeto non fissato ha causato caduta e ansia per gravidanza.; comportamento del personale: Personale alla reception ha ignorato e trattato male gli ospiti.; prenotazione non rispettata: Camera con vista e piano richiesti non rispettati, nessuna soluzione offerta.; voto molto basso (1 su 5)",
+        "prova": "During the evening, I fell down in the room because a part of the carpet was not really fixed on the floor."
+      },
+      {
+        "review_id": "R8601d80afe",
+        "data": "2023-02-13",
+        "voto": "2 su 5",
+        "priorita": "alta",
+        "motivo": "igiene e salute: Muffa nella doccia e sporco in camera; reclamo non risolto: Problemi segnalati alla direzione non risolti; voto molto basso (2 su 5)",
+        "prova": "Mold in the shower (see pictures), garbage in room, carpets not vacuumed and a bright RED hair roller on the floor left from a previous guest"
+      },
+      {
+        "review_id": "Rb50243dba0",
+        "data": "2022-10-04",
+        "voto": "3 su 5",
+        "priorita": "alta",
+        "motivo": "comportamento del personale: Mancanza di facchini/doorman per aiutare con i bagagli; igiene e salute: Presenza di mosche nel lounge e cibo di scarsa qualità al ristorante",
+        "prova": "no one was around to open the doors or help me into the car with my luggage"
+      },
+      {
+        "review_id": "R9351a7bba4",
+        "data": "2022-06-17",
+        "voto": "1 su 5",
+        "priorita": "alta",
+        "motivo": "igiene e salute: Bagno sporco all'arrivo; prenotazione non rispettata: Check-in durato quasi 3 ore oltre l'orario previsto senza offerte; addebiti contestati: Doppio addebito e rifiuto di rimborsare upgrade errato di 675 dollari; voto molto basso (1 su 5)",
+        "prova": "toilet was dirty upon arrival"
+      },
+      {
+        "review_id": "Rafbc7780e8",
+        "data": "2022-05-25",
+        "voto": "1 su 5",
+        "priorita": "alta",
+        "motivo": "discriminazione o molestie: Personale alla reception razzista e scortese; voto molto basso (1 su 5)",
+        "prova": "The staff at the front desk are rude, inefficient and extremely racist."
+      },
+      {
+        "review_id": "Rcc84ffa0ab",
+        "data": "2022-05-23",
+        "voto": "1 su 5",
+        "priorita": "alta",
+        "motivo": "igiene e salute: Bagno sporco e non pulito per giorni; voto molto basso (1 su 5)",
+        "prova": "We asked 3 days for them to clean the bath that was very very dirty, and They didn’t."
+      },
+      {
+        "review_id": "R2ce11790a7",
+        "data": "2022-03-23",
+        "voto": "4 su 5",
+        "priorita": "alta",
+        "motivo": "igiene e salute: Asciugamani usurati e amenities bagno scarse; prenotazione non rispettata: Servizio di pulizia promesso 2 volte al giorno non ricevuto",
+        "prova": "frayed thin towels and bare amenities in the bathroom"
+      },
+      {
+        "review_id": "R47a9e079b5",
+        "data": "2021-11-12",
+        "voto": "1 su 5",
+        "priorita": "alta",
+        "motivo": "igiene e salute: Tende della camera coperte di muffa.; voto molto basso (1 su 5)",
+        "prova": "Drapery, which I later discovered was covered in mold, remains the same."
+      }
+    ],
+    "lingue_con_abbastanza_recensioni": [
+      {
+        "lingua": "en",
+        "recensioni": "1.727",
+        "negative_o_miste": "26%"
+      },
+      {
+        "lingua": "es",
+        "recensioni": "43",
+        "negative_o_miste": "26%"
+      },
+      {
+        "lingua": "de",
+        "recensioni": "33",
+        "negative_o_miste": "36%"
+      },
+      {
+        "lingua": "ja",
+        "recensioni": "30",
+        "negative_o_miste": "40%"
+      },
+      {
+        "lingua": "pt",
+        "recensioni": "24",
+        "negative_o_miste": "17%"
+      },
+      {
+        "lingua": "it",
+        "recensioni": "21",
+        "negative_o_miste": "29%"
+      },
+      {
+        "lingua": "fr",
+        "recensioni": "16",
+        "negative_o_miste": "38%"
+      }
+    ],
+    "differenze_tra_lingue_significative": [],
+    "citazioni_disponibili": [
+      {
+        "per": "apprezzato: Personale e servizio",
+        "parole_chiave": [
+          "staff",
+          "behavior",
+          "concierge",
+          "housekeeping",
+          "reception",
+          "front",
+          "desk",
+          "doorman",
+          "door",
+          "doormen",
+          "bell",
+          "bellman",
+          "attentiveness",
+          "friendliness",
+          "communication",
+          "honesty",
+          "attitude",
+          "availability",
+          "competence",
+          "efficiency",
+          "professionalism",
+          "recognition",
+          "training",
+          "staffing",
+          "levels",
+          "guest",
+          "relations",
+          "customer",
+          "treatment",
+          "preferences",
+          "manager",
+          "management",
+          "response"
+        ],
+        "recensioni": [
+          {
+            "review_id": "Rf3432517c5",
+            "data": "2024-01-12",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "Beautiful hotel, great location across from Central Park. Hotel was nicely renovated from the original St. Moritz.\nGuest rooms are luxurious and spotlessly maintained by the housekeepers.\nThe lobby and guest floors were nicely decorated for the Christmas season. Reception and concierge staff are welcoming and attentive.\nThe General Manager, Hans Schaepman was very accommodating and understanding when notified of a problem we encountered."
+          },
+          {
+            "review_id": "Rb4962aaf6a",
+            "data": "2024-01-01",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "We stayed at the Ritz for a week in one of the club suites. The room had two bathrooms, a living area, and a quiet bedroom. Being at Central Park, you couldn't ask for a better location. The club provided us with excellent meals and drinks. When we had to go several blocks, the hotel offered its house Mercedes to us. The housekeeping was wonderful, the front desk helped us with whatever we needed, and it was an all-around great experience. If you are able to, it's worth a stay."
+          },
+          {
+            "review_id": "Re5bba2c001",
+            "data": "2023-12-17",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "We had a great weekend trip in NYC. Room was great, but a little hot. Overall though great trip and the hotel is only a block away from 5th Avenue. Had great room serivce and the staff was very attentive. Thank you for a great trip to NYC at Christmas."
+          }
+        ]
+      },
+      {
+        "per": "apprezzato: Posizione",
+        "parole_chiave": [
+          "location",
+          "nearby",
+          "attractions",
+          "transportation"
+        ],
+        "recensioni": [
+          {
+            "review_id": "Rf3432517c5",
+            "data": "2024-01-12",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "Beautiful hotel, great location across from Central Park. Hotel was nicely renovated from the original St. Moritz.\nGuest rooms are luxurious and spotlessly maintained by the housekeepers.\nThe lobby and guest floors were nicely decorated for the Christmas season. Reception and concierge staff are welcoming and attentive.\nThe General Manager, Hans Schaepman was very accommodating and understanding when notified of a problem we encountered."
+          },
+          {
+            "review_id": "Rb4962aaf6a",
+            "data": "2024-01-01",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "We stayed at the Ritz for a week in one of the club suites. The room had two bathrooms, a living area, and a quiet bedroom. Being at Central Park, you couldn't ask for a better location. The club provided us with excellent meals and drinks. When we had to go several blocks, the hotel offered its house Mercedes to us. The housekeeping was wonderful, the front desk helped us with whatever we needed, and it was an all-around great experience. If you are able to, it's worth a stay."
+          },
+          {
+            "review_id": "Re5bba2c001",
+            "data": "2023-12-17",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "We had a great weekend trip in NYC. Room was great, but a little hot. Overall though great trip and the hotel is only a block away from 5th Avenue. Had great room serivce and the staff was very attentive. Thank you for a great trip to NYC at Christmas."
+          }
+        ]
+      },
+      {
+        "per": "apprezzato: Qualità e comfort della camera",
+        "parole_chiave": [
+          "room",
+          "size",
+          "rooms",
+          "condition",
+          "decor",
+          "comfort",
+          "amenities",
+          "maintenance",
+          "upgrade",
+          "change",
+          "process",
+          "policy",
+          "cleaning",
+          "frequency",
+          "decoration",
+          "features",
+          "layout",
+          "readiness",
+          "style",
+          "temperature",
+          "type",
+          "access",
+          "allocation",
+          "arrangement",
+          "assignment",
+          "category",
+          "cost",
+          "design",
+          "door",
+          "furnishings",
+          "furniture",
+          "interior",
+          "interiors",
+          "keys",
+          "power",
+          "outlets",
+          "quietness",
+          "rates",
+          "renovation",
+          "suite",
+          "wardrobe",
+          "wall",
+          "fabric",
+          "pillows",
+          "linens",
+          "sheets",
+          "beds"
+        ],
+        "recensioni": [
+          {
+            "review_id": "Rf3432517c5",
+            "data": "2024-01-12",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "Beautiful hotel, great location across from Central Park. Hotel was nicely renovated from the original St. Moritz.\nGuest rooms are luxurious and spotlessly maintained by the housekeepers.\nThe lobby and guest floors were nicely decorated for the Christmas season. Reception and concierge staff are welcoming and attentive.\nThe General Manager, Hans Schaepman was very accommodating and understanding when notified of a problem we encountered."
+          },
+          {
+            "review_id": "Rb4962aaf6a",
+            "data": "2024-01-01",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "We stayed at the Ritz for a week in one of the club suites. The room had two bathrooms, a living area, and a quiet bedroom. Being at Central Park, you couldn't ask for a better location. The club provided us with excellent meals and drinks. When we had to go several blocks, the hotel offered its house Mercedes to us. The housekeeping was wonderful, the front desk helped us with whatever we needed, and it was an all-around great experience. If you are able to, it's worth a stay."
+          },
+          {
+            "review_id": "Re5bba2c001",
+            "data": "2023-12-17",
+            "voto": "5 su 5",
+            "lingua": "en",
+            "testo": "We had a great weekend trip in NYC. Room was great, but a little hot. Overall though great trip and the hotel is only a block away from 5th Avenue. Had great room serivce and the staff was very attentive. Thank you for a great trip to NYC at Christmas."
+          }
+        ]
+      },
+      {
+        "per": "criticato: Prezzo e valore",
+        "parole_chiave": [
+          "price",
+          "money",
+          "ratio",
+          "food",
+          "drink",
+          "breakfast",
+          "room",
+          "cost",
+          "valet",
+          "billing",
+          "accuracy",
+          "practices",
+          "deposit",
+          "policy",
+          "paid"
+        ],
+        "recensioni": [
+          {
+            "review_id": "R99e219b5b9",
+            "data": "2023-12-01",
+            "voto": "1 su 5",
+            "lingua": "en",
+            "testo": "One of the worst Ritz Carlton hotel we have stayed. Hotel room interiors are outdated, service is lacking, room service food is bad and front desk were unwelcoming. Its saving grace is the location to Central Park and shopping belt. That's about it. For the price it is charging, we can find much better hotels else."
+          },
+          {
+            "review_id": "Rcc76c25eaf",
+            "data": "2023-08-23",
+            "voto": "3 su 5",
+            "lingua": "en",
+            "testo": "I’m staying here right now. Please be aware that if you don’t book a room with a view your room will feel like a cave. We have two windows and the blind on one window is actually broken. There’s no tea or coffee making facilities, no cups and nowhere to put anything of your own in a fridge. I dread to think what it would be like if you needed to store baby milk. The price of basic food for room service and breakfast is bordering on robbery. \nBeds are comfy and the location is great. This is supposed to be a luxury hotel but it really doesn’t feel like it in this room."
+          },
+          {
+            "review_id": "R668694e678",
+            "data": "2023-08-22",
+            "voto": "4 su 5",
+            "lingua": "en",
+            "testo": "Beautiful hotel and ideal location! Very expensive with no included amenities. Breakfast for two $150! Coffee cart available 6-8 am! Really! As an avid traveler, I will stay elsewhere in future. Paying for name only."
+          }
+        ]
+      },
+      {
+        "per": "criticato: Personale e servizio",
+        "parole_chiave": [
+          "staff",
+          "behavior",
+          "concierge",
+          "housekeeping",
+          "reception",
+          "front",
+          "desk",
+          "doorman",
+          "door",
+          "doormen",
+          "bell",
+          "bellman",
+          "attentiveness",
+          "friendliness",
+          "communication",
+          "honesty",
+          "attitude",
+          "availability",
+          "competence",
+          "efficiency",
+          "professionalism",
+          "recognition",
+          "training",
+          "staffing",
+          "levels",
+          "guest",
+          "relations",
+          "customer",
+          "treatment",
+          "preferences",
+          "manager",
+          "management",
+          "response"
+        ],
+        "recensioni": [
+          {
+            "review_id": "R99e219b5b9",
+            "data": "2023-12-01",
+            "voto": "1 su 5",
+            "lingua": "en",
+            "testo": "One of the worst Ritz Carlton hotel we have stayed. Hotel room interiors are outdated, service is lacking, room service food is bad and front desk were unwelcoming. Its saving grace is the location to Central Park and shopping belt. That's about it. For the price it is charging, we can find much better hotels else."
+          },
+          {
+            "review_id": "R4b1b69178b",
+            "data": "2023-08-17",
+            "voto": "1 su 5",
+            "lingua": "en",
+            "testo": "Travel to NYC a lot and often stay at the JW Marriott because we love it there. We thought we would splurge and stay at the Ritz Carlton Central Park this time, bad decision. The room was nice and the doormen are fantastic but that’s about it. The lobby is small and not very inviting, and restaurant not very enjoyable. But the real issue is the front desk staff and manager. They were so rude to us, it almost ruined our entire vacation. You hear about the incredible service that these people are supposed to give it to you, but it was just horrifying and we will never be back."
+          },
+          {
+            "review_id": "Rc8631827a9",
+            "data": "2023-02-08",
+            "voto": "3 su 5",
+            "lingua": "en",
+            "testo": "Poor services, tired rooms, basic amenities missing. Called concierge to deliver suitcase to the room. After 30 minutes I had to retrieve it. Room had rope for one one guest even though booked for 2. No free water offered. Room decor feels tired."
+          }
+        ]
+      },
+      {
+        "per": "criticato: Qualità e comfort della camera",
+        "parole_chiave": [
+          "room",
+          "size",
+          "rooms",
+          "condition",
+          "decor",
+          "comfort",
+          "amenities",
+          "maintenance",
+          "upgrade",
+          "change",
+          "process",
+          "policy",
+          "cleaning",
+          "frequency",
+          "decoration",
+          "features",
+          "layout",
+          "readiness",
+          "style",
+          "temperature",
+          "type",
+          "access",
+          "allocation",
+          "arrangement",
+          "assignment",
+          "category",
+          "cost",
+          "design",
+          "door",
+          "furnishings",
+          "furniture",
+          "interior",
+          "interiors",
+          "keys",
+          "power",
+          "outlets",
+          "quietness",
+          "rates",
+          "renovation",
+          "suite",
+          "wardrobe",
+          "wall",
+          "fabric",
+          "pillows",
+          "linens",
+          "sheets",
+          "beds"
+        ],
+        "recensioni": [
+          {
+            "review_id": "R99e219b5b9",
+            "data": "2023-12-01",
+            "voto": "1 su 5",
+            "lingua": "en",
+            "testo": "One of the worst Ritz Carlton hotel we have stayed. Hotel room interiors are outdated, service is lacking, room service food is bad and front desk were unwelcoming. Its saving grace is the location to Central Park and shopping belt. That's about it. For the price it is charging, we can find much better hotels else."
+          },
+          {
+            "review_id": "Rcc76c25eaf",
+            "data": "2023-08-23",
+            "voto": "3 su 5",
+            "lingua": "en",
+            "testo": "I’m staying here right now. Please be aware that if you don’t book a room with a view your room will feel like a cave. We have two windows and the blind on one window is actually broken. There’s no tea or coffee making facilities, no cups and nowhere to put anything of your own in a fridge. I dread to think what it would be like if you needed to store baby milk. The price of basic food for room service and breakfast is bordering on robbery. \nBeds are comfy and the location is great. This is supposed to be a luxury hotel but it really doesn’t feel like it in this room."
+          },
+          {
+            "review_id": "R374a0a83ac",
+            "data": "2023-08-18",
+            "voto": "1 su 5",
+            "lingua": "en",
+            "testo": "Worst experience ever in NY. More than two hours for our check in. One bed for THREE PEOPLE!!!!!!!!! \nI come really often to NY. . This is the worst hotel ever stayed. The mini bar door broken. Terrible hotel and experience"
+          }
+        ]
+      }
+    ]
+  },
+  "registro_giro": {
+    "inizio": "2026-11-13T08:27:37.645Z",
+    "fine": "2026-11-13T08:50:56.934Z",
+    "durata_minuti": 23.3,
+    "modello": "gpt-4.1-mini",
+    "prezzi_usd_per_milione_di_token": {
+      "input": 0.4,
+      "output": 1.6
+    },
+    "recensioni": 1927,
+    "versione_aspetti": "v2",
+    "misurato_per_fase": {
+      "scoperta_temi_liberi": {
+        "chiamate": 0,
+        "token_input": 0,
+        "token_output": 0,
+        "costo_usd": 0
+      },
+      "consolidamento_aspetti": {
+        "chiamate": 0,
+        "token_input": 0,
+        "token_output": 0,
+        "costo_usd": 0
+      },
+      "analisi_recensioni": {
+        "chiamate": 387,
+        "token_input": 1285428,
+        "token_output": 176023,
+        "costo_usd": 0.7958
+      },
+      "digest": {
+        "chiamate": 1,
+        "token_input": 9189,
+        "token_output": 791,
+        "costo_usd": 0.0049
+      }
+    },
+    "misurato_totale": {
+      "token_input": 1294617,
+      "token_output": 176814,
+      "costo_usd": 0.8007
+    },
+    "guardrail_stimato": {
+      "chiamate": 1928,
+      "token_input": 986782,
+      "token_output": 57840,
+      "nota": "STIMA: token calcolati dalla lunghezza dei testi, n8n non li espone per i nodi Guardrails",
+      "costo_usd": 0.4873
+    },
+    "costo_totale_usd_misurato_piu_stimato": 1.288,
+    "costo_per_1000_recensioni_usd": 0.6684
+  }
+}

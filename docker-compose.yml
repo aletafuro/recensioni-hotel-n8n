@@ -1,0 +1,67 @@
+# Analisi recensioni hotel con n8n
+#
+# Due modi di avviare (vedi README.md):
+#   docker compose run --rm esegui     -> esegue tutto il workflow senza interfaccia
+#   docker compose run --rm verifica   -> metriche di verifica sui risultati
+#   docker compose up -d n8n           -> interfaccia su http://localhost:5678
+#
+# La chiave OpenAI arriva dal file .env (copiato da .env.example) oppure
+# dalla variabile d'ambiente OPENAI_API_KEY del computer.
+
+x-n8n-comune: &n8n-comune
+  image: docker.n8n.io/n8nio/n8n:2.29.10
+  environment:
+    OPENAI_API_KEY: ${OPENAI_API_KEY:?Manca OPENAI_API_KEY - copia .env.example in .env e inserisci la chiave}
+    OPENAI_BASE_URL: ${OPENAI_BASE_URL:-https://api.openai.com/v1}
+    LLM_MODEL: ${LLM_MODEL:-gpt-4.1-mini}
+    GUARDRAIL_MODEL: ${GUARDRAIL_MODEL:-gpt-4.1-mini}
+    INPUT_FILE: ${INPUT_FILE:-/files/input/ritz_carlton_reviews.csv}
+    OUTPUT_DIR: ${OUTPUT_DIR:-/files/output}
+    LIMIT: ${LIMIT:-0}
+    BATCH_SIZE: ${BATCH_SIZE:-5}
+    DISCOVERY_SAMPLE: ${DISCOVERY_SAMPLE:-240}
+    MIN_REVIEWS_PER_PERIOD: ${MIN_REVIEWS_PER_PERIOD:-100}
+    CONTEXT_FILE: ${CONTEXT_FILE:-/files/contesto/contesto.json}
+    ASPECTS_FILE: ${ASPECTS_FILE:-/files/aspetti/aspetti_fissi.json}
+    RISCOPRI_ASPETTI: ${RISCOPRI_ASPETTI:-false}
+    PREZZO_INPUT_USD_PER_MILIONE: ${PREZZO_INPUT_USD_PER_MILIONE:-0.4}
+    PREZZO_OUTPUT_USD_PER_MILIONE: ${PREZZO_OUTPUT_USD_PER_MILIONE:-1.6}
+    # i nodi Code leggono la configurazione qui sopra con $env
+    N8N_BLOCK_ENV_ACCESS_IN_NODE: "false"
+    # i nodi di lettura/scrittura file lavorano solo dentro /files (= cartella data/)
+    N8N_RESTRICT_FILE_ACCESS_TO: /files
+    # sha1 per l'identificativo stabile delle recensioni
+    NODE_FUNCTION_ALLOW_BUILTIN: crypto
+    GENERIC_TIMEZONE: Europe/Rome
+    TZ: Europe/Rome
+    N8N_DIAGNOSTICS_ENABLED: "false"
+    N8N_PERSONALIZATION_ENABLED: "false"
+    N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS: "false"
+  volumes:
+    - ./data:/files
+    - ./workflow:/workflow:ro
+    - ./docker:/avvio:ro
+    - n8n_recensioni:/home/node/.n8n
+
+services:
+  # interfaccia grafica, con credenziale e workflow gia' importati
+  n8n:
+    <<: *n8n-comune
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    entrypoint: ["/bin/sh", "-c", "mkdir -p \"$$OUTPUT_DIR\" && node /avvio/crea_credenziale.js && n8n import:credentials --input=/tmp/credenziale.json && rm -f /tmp/credenziale.json && n8n import:workflow --separate --input=/workflow && exec n8n start"]
+
+  # esecuzione completa senza interfaccia: prepara e lancia il workflow
+  esegui:
+    <<: *n8n-comune
+    profiles: ["esegui"]
+    entrypoint: ["/bin/sh", "-c", "mkdir -p \"$$OUTPUT_DIR\" && node /avvio/crea_credenziale.js && n8n import:credentials --input=/tmp/credenziale.json && rm -f /tmp/credenziale.json && n8n import:workflow --separate --input=/workflow && n8n execute --id=analisiRecens001"]
+
+  # verifica del sistema: metriche sviluppo/test e gold set sui risultati gia' prodotti
+  verifica:
+    <<: *n8n-comune
+    profiles: ["verifica"]
+    entrypoint: ["/bin/sh", "-c", "mkdir -p \"$$OUTPUT_DIR\" && node /avvio/crea_credenziale.js && n8n import:credentials --input=/tmp/credenziale.json && rm -f /tmp/credenziale.json && n8n import:workflow --separate --input=/workflow && n8n execute --id=verificaRecens01"]
+
+volumes:
+  n8n_recensioni:

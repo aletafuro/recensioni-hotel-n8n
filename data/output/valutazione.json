@@ -1,0 +1,428 @@
+{
+  "generata_il": "2026-11-13T08:51:36.845Z",
+  "file_risultati": "/files/output",
+  "avvertenza_gold_set": "Gold set etichettato alla cieca da un modello diverso da quello del sistema, senza accesso ai risultati ne' ai prompt: e' un confronto tra modelli, non un'annotazione umana.",
+  "A_sviluppo_contro_test": {
+    "recensioni": {
+      "sviluppo": 1546,
+      "test": 381
+    },
+    "aspetti_medi_per_recensione": {
+      "sviluppo": 3.78,
+      "test": 3.79
+    },
+    "confronto": [
+      {
+        "misura": "positive_tra_voti_4_5",
+        "sviluppo": {
+          "casi": 1130,
+          "su": 1354,
+          "pct": 83.5,
+          "ic95": [
+            81.4,
+            85.3
+          ]
+        },
+        "test": {
+          "casi": 274,
+          "su": 331,
+          "pct": 82.8,
+          "ic95": [
+            78.3,
+            86.5
+          ]
+        },
+        "z_test_meno_sviluppo": -0.3,
+        "differenza_oltre_il_rumore": false
+      },
+      {
+        "misura": "negative_o_miste_tra_voti_1_2",
+        "sviluppo": {
+          "casi": 86,
+          "su": 86,
+          "pct": 100,
+          "ic95": [
+            95.7,
+            100
+          ]
+        },
+        "test": {
+          "casi": 26,
+          "su": 26,
+          "pct": 100,
+          "ic95": [
+            87.1,
+            100
+          ]
+        },
+        "z_test_meno_sviluppo": 0,
+        "differenza_oltre_il_rumore": false
+      },
+      {
+        "misura": "con_almeno_un_aspetto",
+        "sviluppo": {
+          "casi": 1543,
+          "su": 1546,
+          "pct": 99.8,
+          "ic95": [
+            99.4,
+            99.9
+          ]
+        },
+        "test": {
+          "casi": 381,
+          "su": 381,
+          "pct": 100,
+          "ic95": [
+            99,
+            100
+          ]
+        },
+        "z_test_meno_sviluppo": 0.86,
+        "differenza_oltre_il_rumore": false
+      },
+      {
+        "misura": "con_temi_fuori_elenco",
+        "sviluppo": {
+          "casi": 1017,
+          "su": 1546,
+          "pct": 65.8,
+          "ic95": [
+            63.4,
+            68.1
+          ]
+        },
+        "test": {
+          "casi": 245,
+          "su": 381,
+          "pct": 64.3,
+          "ic95": [
+            59.4,
+            69
+          ]
+        },
+        "z_test_meno_sviluppo": -0.54,
+        "differenza_oltre_il_rumore": false
+      },
+      {
+        "misura": "segnalate",
+        "sviluppo": {
+          "casi": 215,
+          "su": 1546,
+          "pct": 13.9,
+          "ic95": [
+            12.3,
+            15.7
+          ]
+        },
+        "test": {
+          "casi": 51,
+          "su": 381,
+          "pct": 13.4,
+          "ic95": [
+            10.3,
+            17.2
+          ]
+        },
+        "z_test_meno_sviluppo": -0.26,
+        "differenza_oltre_il_rumore": false
+      },
+      {
+        "misura": "segnalate_per_contenuto",
+        "sviluppo": {
+          "casi": 190,
+          "su": 1546,
+          "pct": 12.3,
+          "ic95": [
+            10.7,
+            14
+          ]
+        },
+        "test": {
+          "casi": 45,
+          "su": 381,
+          "pct": 11.8,
+          "ic95": [
+            8.9,
+            15.4
+          ]
+        },
+        "z_test_meno_sviluppo": -0.26,
+        "differenza_oltre_il_rumore": false
+      },
+      {
+        "misura": "lingua_coerente_con_alfabeto",
+        "sviluppo": {
+          "casi": 38,
+          "su": 39,
+          "pct": 97.4,
+          "ic95": [
+            86.8,
+            99.5
+          ]
+        },
+        "test": {
+          "casi": 15,
+          "su": 15,
+          "pct": 100,
+          "ic95": [
+            79.6,
+            100
+          ]
+        },
+        "z_test_meno_sviluppo": 0.63,
+        "differenza_oltre_il_rumore": false
+      }
+    ]
+  },
+  "B_gold_set": {
+    "recensioni_etichettate": 50,
+    "sentiment_complessivo": {
+      "accuratezza_pct": 90,
+      "ic95": [
+        78.6,
+        95.7
+      ],
+      "kappa_cohen": 0.83,
+      "matrice_confusione_atteso_per_sistema": {
+        "positive": {
+          "positive": 23,
+          "mixed": 4,
+          "negative": 0,
+          "neutral": 0
+        },
+        "mixed": {
+          "positive": 0,
+          "mixed": 4,
+          "negative": 1,
+          "neutral": 0
+        },
+        "negative": {
+          "positive": 0,
+          "mixed": 0,
+          "negative": 18,
+          "neutral": 0
+        },
+        "neutral": {
+          "positive": 0,
+          "mixed": 0,
+          "negative": 0,
+          "neutral": 0
+        }
+      }
+    },
+    "lingua": {
+      "accuratezza_pct": 100,
+      "ic95": [
+        92.9,
+        100
+      ]
+    },
+    "aspetti": {
+      "precisione_pct": 92.3,
+      "richiamo_pct": 82.5,
+      "f1_pct": 87.2,
+      "in_comune": 156,
+      "solo_sistema": 13,
+      "solo_gold": 33,
+      "sentiment_corretto_sugli_aspetti_in_comune_pct": 95.5,
+      "ic95_sentiment": [
+        91,
+        97.8
+      ],
+      "per_aspetto": {
+        "price_and_value": {
+          "attesi": 18,
+          "trovati": 12,
+          "in_comune": 12
+        },
+        "room_view": {
+          "attesi": 15,
+          "trovati": 13,
+          "in_comune": 12
+        },
+        "room_quality_and_comfort": {
+          "attesi": 29,
+          "trovati": 29,
+          "in_comune": 27
+        },
+        "food_and_beverage": {
+          "attesi": 14,
+          "trovati": 15,
+          "in_comune": 12
+        },
+        "staff_service": {
+          "attesi": 39,
+          "trovati": 40,
+          "in_comune": 39
+        },
+        "hotel_facilities_and_ambience": {
+          "attesi": 16,
+          "trovati": 11,
+          "in_comune": 8
+        },
+        "wifi_and_technology": {
+          "attesi": 2,
+          "trovati": 2,
+          "in_comune": 2
+        },
+        "check_in_and_check_out": {
+          "attesi": 6,
+          "trovati": 2,
+          "in_comune": 2
+        },
+        "cleanliness": {
+          "attesi": 6,
+          "trovati": 4,
+          "in_comune": 4
+        },
+        "bathroom": {
+          "attesi": 6,
+          "trovati": 3,
+          "in_comune": 3
+        },
+        "club_lounge": {
+          "attesi": 10,
+          "trovati": 12,
+          "in_comune": 10
+        },
+        "location": {
+          "attesi": 22,
+          "trovati": 22,
+          "in_comune": 22
+        },
+        "noise_and_soundproofing": {
+          "attesi": 5,
+          "trovati": 2,
+          "in_comune": 2
+        },
+        "spa_and_wellness": {
+          "attesi": 1,
+          "trovati": 2,
+          "in_comune": 1
+        }
+      }
+    },
+    "segnalazioni_per_contenuto": {
+      "precisione_pct": 60,
+      "richiamo_pct": 100,
+      "vere_positive": 12,
+      "false_positive": 8,
+      "false_negative": 0,
+      "vere_negative": 30
+    },
+    "disaccordi": [
+      {
+        "review_id": "R6f5b8ec69d",
+        "sentiment_atteso": "negative",
+        "sentiment_sistema": "negative",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "staff_misconduct"
+        ]
+      },
+      {
+        "review_id": "R2bff31eebe",
+        "sentiment_atteso": "negative",
+        "sentiment_sistema": "negative",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "staff_misconduct",
+          "billing_dispute"
+        ]
+      },
+      {
+        "review_id": "R8641eea77b",
+        "sentiment_atteso": "negative",
+        "sentiment_sistema": "negative",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "health_hygiene",
+          "staff_misconduct"
+        ]
+      },
+      {
+        "review_id": "R4703149c24",
+        "sentiment_atteso": "negative",
+        "sentiment_sistema": "negative",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "staff_misconduct",
+          "severe_service_failure"
+        ]
+      },
+      {
+        "review_id": "R778c912164",
+        "sentiment_atteso": "negative",
+        "sentiment_sistema": "negative",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "staff_misconduct",
+          "booking_failure",
+          "severe_service_failure"
+        ]
+      },
+      {
+        "review_id": "R00975947cd",
+        "sentiment_atteso": "negative",
+        "sentiment_sistema": "negative",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "booking_failure"
+        ]
+      },
+      {
+        "review_id": "Ra218d18b98",
+        "sentiment_atteso": "mixed",
+        "sentiment_sistema": "negative",
+        "segnalazione_attesa": [
+          "booking_failure"
+        ],
+        "segnalazione_sistema": [
+          "booking_failure",
+          "staff_misconduct"
+        ]
+      },
+      {
+        "review_id": "R85efd0e96d",
+        "sentiment_atteso": "mixed",
+        "sentiment_sistema": "mixed",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "staff_misconduct",
+          "severe_service_failure"
+        ]
+      },
+      {
+        "review_id": "Ra9ed976269",
+        "sentiment_atteso": "positive",
+        "sentiment_sistema": "mixed",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": []
+      },
+      {
+        "review_id": "R813ca2bc5f",
+        "sentiment_atteso": "positive",
+        "sentiment_sistema": "mixed",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": []
+      },
+      {
+        "review_id": "R43cae00ece",
+        "sentiment_atteso": "positive",
+        "sentiment_sistema": "mixed",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": [
+          "health_hygiene"
+        ]
+      },
+      {
+        "review_id": "R1d7ac6211c",
+        "sentiment_atteso": "positive",
+        "sentiment_sistema": "mixed",
+        "segnalazione_attesa": [],
+        "segnalazione_sistema": []
+      }
+    ]
+  }
+}

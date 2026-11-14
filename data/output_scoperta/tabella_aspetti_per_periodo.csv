@@ -1,0 +1,177 @@
+periodo,recensioni_del_periodo,aspetto,nome_aspetto,menzioni,positive,negative,neutral,pct_recensioni_che_lo_apprezzano,pct_recensioni_che_lo_criticano
+2002-2008,124,location,Posizione,67,64,0,3,51.6,0
+2002-2008,124,staff,Personale,101,87,11,3,70.2,8.9
+2002-2008,124,room_quality,Qualità della camera,110,94,9,7,75.8,7.3
+2002-2008,124,room_service,Servizio in camera,17,9,5,3,7.3,4
+2002-2008,124,price,Prezzo,33,6,21,6,4.8,16.9
+2002-2008,124,food_and_beverage,Cibo e bevande,40,27,11,2,21.8,8.9
+2002-2008,124,service_quality,Qualità del servizio,37,27,9,1,21.8,7.3
+2002-2008,124,cleanliness,Pulizia,5,2,3,0,1.6,2.4
+2002-2008,124,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,3,2,1,0,1.6,0.8
+2002-2008,124,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,28,23,2,3,18.5,1.6
+2002-2008,124,spa_and_wellness,Spa e benessere,16,15,1,0,12.1,0.8
+2002-2008,124,facilities_and_amenities,Strutture e servizi,31,28,3,0,22.6,2.4
+2002-2008,124,security_and_safety,Sicurezza,4,4,0,0,3.2,0
+2002-2008,124,noise_and_quietness,Rumore e silenziosità,6,5,1,0,4,0.8
+2002-2008,124,wifi_and_connectivity,Wi-Fi e connettività,3,2,1,0,1.6,0.8
+2002-2008,124,billing_and_payment,Fatturazione e pagamento,2,1,1,0,0.8,0.8
+2009-2011,158,location,Posizione,106,103,0,3,65.2,0
+2009-2011,158,staff,Personale,116,105,8,3,66.5,5.1
+2009-2011,158,room_quality,Qualità della camera,114,99,11,4,62.7,7
+2009-2011,158,room_service,Servizio in camera,15,12,3,0,7.6,1.9
+2009-2011,158,price,Prezzo,31,6,21,4,3.8,13.3
+2009-2011,158,food_and_beverage,Cibo e bevande,56,45,9,2,28.5,5.7
+2009-2011,158,service_quality,Qualità del servizio,46,34,11,1,21.5,7
+2009-2011,158,cleanliness,Pulizia,12,10,2,0,6.3,1.3
+2009-2011,158,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,3,2,1,0,1.3,0.6
+2009-2011,158,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,39,35,3,1,22.2,1.9
+2009-2011,158,spa_and_wellness,Spa e benessere,16,14,0,2,8.9,0
+2009-2011,158,facilities_and_amenities,Strutture e servizi,26,21,5,0,13.3,3.2
+2009-2011,158,security_and_safety,Sicurezza,3,3,0,0,1.9,0
+2009-2011,158,noise_and_quietness,Rumore e silenziosità,4,2,2,0,1.3,1.3
+2009-2011,158,wifi_and_connectivity,Wi-Fi e connettività,9,4,5,0,2.5,3.2
+2009-2011,158,billing_and_payment,Fatturazione e pagamento,0,0,0,0,0,0
+2012,134,location,Posizione,100,94,3,3,70.1,2.2
+2012,134,staff,Personale,112,94,13,5,70.1,9.7
+2012,134,room_quality,Qualità della camera,96,88,6,2,65.7,4.5
+2012,134,room_service,Servizio in camera,11,7,4,0,5.2,3
+2012,134,price,Prezzo,27,4,14,9,3,10.4
+2012,134,food_and_beverage,Cibo e bevande,47,33,11,3,24.6,8.2
+2012,134,service_quality,Qualità del servizio,31,18,12,1,13.4,9
+2012,134,cleanliness,Pulizia,15,11,4,0,8.2,3
+2012,134,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,9,3,4,2,2.2,3
+2012,134,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,31,27,4,0,20.1,3
+2012,134,spa_and_wellness,Spa e benessere,8,7,0,1,5.2,0
+2012,134,facilities_and_amenities,Strutture e servizi,32,24,7,1,17.9,5.2
+2012,134,security_and_safety,Sicurezza,1,0,1,0,0,0.7
+2012,134,noise_and_quietness,Rumore e silenziosità,6,4,2,0,3,1.5
+2012,134,wifi_and_connectivity,Wi-Fi e connettività,1,1,0,0,0.7,0
+2012,134,billing_and_payment,Fatturazione e pagamento,1,0,1,0,0,0.7
+2013,131,location,Posizione,86,83,1,2,63.4,0.8
+2013,131,staff,Personale,106,93,10,3,71,7.6
+2013,131,room_quality,Qualità della camera,96,78,13,5,59.5,9.9
+2013,131,room_service,Servizio in camera,10,9,0,1,6.9,0
+2013,131,price,Prezzo,23,5,12,6,3.8,9.2
+2013,131,food_and_beverage,Cibo e bevande,49,37,10,2,28.2,7.6
+2013,131,service_quality,Qualità del servizio,41,31,8,2,23.7,6.1
+2013,131,cleanliness,Pulizia,5,4,1,0,3.1,0.8
+2013,131,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,7,2,3,2,1.5,2.3
+2013,131,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,29,24,3,2,18.3,2.3
+2013,131,spa_and_wellness,Spa e benessere,6,6,0,0,4.6,0
+2013,131,facilities_and_amenities,Strutture e servizi,26,22,2,2,16.8,1.5
+2013,131,security_and_safety,Sicurezza,1,1,0,0,0.8,0
+2013,131,noise_and_quietness,Rumore e silenziosità,9,7,1,1,5.3,0.8
+2013,131,wifi_and_connectivity,Wi-Fi e connettività,3,2,1,0,1.5,0.8
+2013,131,billing_and_payment,Fatturazione e pagamento,0,0,0,0,0,0
+2014,162,location,Posizione,102,102,0,0,63,0
+2014,162,staff,Personale,126,114,10,2,70.4,6.2
+2014,162,room_quality,Qualità della camera,112,98,6,8,60.5,3.7
+2014,162,room_service,Servizio in camera,9,8,1,0,4.9,0.6
+2014,162,price,Prezzo,29,6,14,9,3.7,8.6
+2014,162,food_and_beverage,Cibo e bevande,58,45,11,2,27.8,6.8
+2014,162,service_quality,Qualità del servizio,38,25,12,1,15.4,7.4
+2014,162,cleanliness,Pulizia,2,2,0,0,1.2,0
+2014,162,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,7,4,3,0,2.5,1.9
+2014,162,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,37,35,2,0,21.6,1.2
+2014,162,spa_and_wellness,Spa e benessere,5,4,1,0,2.5,0.6
+2014,162,facilities_and_amenities,Strutture e servizi,30,25,3,2,15.4,1.9
+2014,162,security_and_safety,Sicurezza,0,0,0,0,0,0
+2014,162,noise_and_quietness,Rumore e silenziosità,9,5,2,2,3.1,1.2
+2014,162,wifi_and_connectivity,Wi-Fi e connettività,4,1,3,0,0.6,1.9
+2014,162,billing_and_payment,Fatturazione e pagamento,1,0,1,0,0,0.6
+2015,237,location,Posizione,163,161,1,1,67.9,0.4
+2015,237,staff,Personale,192,181,8,3,76.4,3.4
+2015,237,room_quality,Qualità della camera,171,146,19,6,61.6,8
+2015,237,room_service,Servizio in camera,18,15,3,0,6.3,1.3
+2015,237,price,Prezzo,37,5,25,7,2.1,10.5
+2015,237,food_and_beverage,Cibo e bevande,86,56,16,14,23.6,6.8
+2015,237,service_quality,Qualità del servizio,57,37,20,0,15.6,8.4
+2015,237,cleanliness,Pulizia,15,14,1,0,5.9,0.4
+2015,237,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,7,2,4,1,0.8,1.7
+2015,237,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,51,48,2,1,20.3,0.8
+2015,237,spa_and_wellness,Spa e benessere,14,13,1,0,5.5,0.4
+2015,237,facilities_and_amenities,Strutture e servizi,43,33,8,2,13.9,3.4
+2015,237,security_and_safety,Sicurezza,1,1,0,0,0.4,0
+2015,237,noise_and_quietness,Rumore e silenziosità,17,14,3,0,5.9,1.3
+2015,237,wifi_and_connectivity,Wi-Fi e connettività,15,7,8,0,3,3.4
+2015,237,billing_and_payment,Fatturazione e pagamento,0,0,0,0,0,0
+2016,256,location,Posizione,163,159,2,2,62.1,0.8
+2016,256,staff,Personale,190,168,15,7,65.6,5.9
+2016,256,room_quality,Qualità della camera,166,131,24,11,51.2,9.4
+2016,256,room_service,Servizio in camera,16,11,5,0,4.3,2
+2016,256,price,Prezzo,41,1,35,5,0.4,13.7
+2016,256,food_and_beverage,Cibo e bevande,99,71,23,5,27.7,9
+2016,256,service_quality,Qualità del servizio,83,65,16,2,25.4,6.3
+2016,256,cleanliness,Pulizia,18,16,2,0,6.3,0.8
+2016,256,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,16,5,11,0,2,4.3
+2016,256,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,58,50,4,4,19.5,1.6
+2016,256,spa_and_wellness,Spa e benessere,17,15,1,1,5.9,0.4
+2016,256,facilities_and_amenities,Strutture e servizi,41,31,10,0,12.1,3.9
+2016,256,security_and_safety,Sicurezza,6,5,1,0,2,0.4
+2016,256,noise_and_quietness,Rumore e silenziosità,10,7,3,0,2.7,1.2
+2016,256,wifi_and_connectivity,Wi-Fi e connettività,10,5,5,0,2,2
+2016,256,billing_and_payment,Fatturazione e pagamento,1,0,1,0,0,0.4
+2017,363,location,Posizione,228,224,1,3,61.7,0.3
+2017,363,staff,Personale,273,249,17,7,68.6,4.7
+2017,363,room_quality,Qualità della camera,178,138,25,15,38,6.9
+2017,363,room_service,Servizio in camera,24,18,5,1,5,1.4
+2017,363,price,Prezzo,44,8,31,5,2.2,8.5
+2017,363,food_and_beverage,Cibo e bevande,99,70,23,6,19.3,6.3
+2017,363,service_quality,Qualità del servizio,100,84,15,1,23.1,4.1
+2017,363,cleanliness,Pulizia,16,16,0,0,4.4,0
+2017,363,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,27,12,13,2,3.3,3.6
+2017,363,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,69,60,7,2,16.5,1.9
+2017,363,spa_and_wellness,Spa e benessere,11,10,1,0,2.8,0.3
+2017,363,facilities_and_amenities,Strutture e servizi,66,57,6,3,15.7,1.7
+2017,363,security_and_safety,Sicurezza,6,5,1,0,1.4,0.3
+2017,363,noise_and_quietness,Rumore e silenziosità,22,20,2,0,5.5,0.6
+2017,363,wifi_and_connectivity,Wi-Fi e connettività,9,3,5,1,0.8,1.4
+2017,363,billing_and_payment,Fatturazione e pagamento,0,0,0,0,0,0
+2018,133,location,Posizione,79,78,0,1,58.6,0
+2018,133,staff,Personale,111,94,13,4,70.7,9.8
+2018,133,room_quality,Qualità della camera,92,76,10,6,57.1,7.5
+2018,133,room_service,Servizio in camera,9,7,2,0,5.3,1.5
+2018,133,price,Prezzo,21,2,14,5,1.5,10.5
+2018,133,food_and_beverage,Cibo e bevande,34,29,3,2,21.8,2.3
+2018,133,service_quality,Qualità del servizio,32,21,9,2,15.8,6.8
+2018,133,cleanliness,Pulizia,11,9,2,0,6.8,1.5
+2018,133,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,9,5,1,3,3.8,0.8
+2018,133,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,30,26,3,1,19.5,2.3
+2018,133,spa_and_wellness,Spa e benessere,4,4,0,0,3,0
+2018,133,facilities_and_amenities,Strutture e servizi,14,11,1,2,8.3,0.8
+2018,133,security_and_safety,Sicurezza,0,0,0,0,0,0
+2018,133,noise_and_quietness,Rumore e silenziosità,13,7,5,1,5.3,3.8
+2018,133,wifi_and_connectivity,Wi-Fi e connettività,6,2,4,0,1.5,3
+2018,133,billing_and_payment,Fatturazione e pagamento,1,0,1,0,0,0.8
+2019,103,location,Posizione,54,53,0,1,51.5,0
+2019,103,staff,Personale,80,67,12,1,65,11.7
+2019,103,room_quality,Qualità della camera,76,58,13,5,56.3,12.6
+2019,103,room_service,Servizio in camera,7,7,0,0,6.8,0
+2019,103,price,Prezzo,22,6,13,3,5.8,12.6
+2019,103,food_and_beverage,Cibo e bevande,30,19,8,3,18.4,7.8
+2019,103,service_quality,Qualità del servizio,24,15,7,2,14.6,6.8
+2019,103,cleanliness,Pulizia,2,2,0,0,1.9,0
+2019,103,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,6,5,0,1,4.9,0
+2019,103,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,22,19,3,0,18.4,2.9
+2019,103,spa_and_wellness,Spa e benessere,7,7,0,0,6.8,0
+2019,103,facilities_and_amenities,Strutture e servizi,24,20,3,1,19.4,2.9
+2019,103,security_and_safety,Sicurezza,0,0,0,0,0,0
+2019,103,noise_and_quietness,Rumore e silenziosità,5,4,1,0,3.9,1
+2019,103,wifi_and_connectivity,Wi-Fi e connettività,1,0,1,0,0,1
+2019,103,billing_and_payment,Fatturazione e pagamento,0,0,0,0,0,0
+2020-2024,126,location,Posizione,68,62,5,1,49.2,4
+2020-2024,126,staff,Personale,93,59,29,5,46.8,23
+2020-2024,126,room_quality,Qualità della camera,87,52,28,7,41.3,22.2
+2020-2024,126,room_service,Servizio in camera,12,9,3,0,7.1,2.4
+2020-2024,126,price,Prezzo,33,0,33,0,0,26.2
+2020-2024,126,food_and_beverage,Cibo e bevande,43,25,15,3,19.8,11.9
+2020-2024,126,service_quality,Qualità del servizio,47,17,29,1,13.5,23
+2020-2024,126,cleanliness,Pulizia,20,11,8,1,8.7,6.3
+2020-2024,126,hotel_condition_and_maintenance,Condizioni e manutenzione dell'hotel,6,2,4,0,1.6,3.2
+2020-2024,126,hotel_ambience_and_decor,Atmosfera e arredamento dell'hotel,18,12,5,1,9.5,4
+2020-2024,126,spa_and_wellness,Spa e benessere,2,2,0,0,1.6,0
+2020-2024,126,facilities_and_amenities,Strutture e servizi,14,11,2,1,8.7,1.6
+2020-2024,126,security_and_safety,Sicurezza,1,1,0,0,0.8,0
+2020-2024,126,noise_and_quietness,Rumore e silenziosità,10,6,3,1,4.8,2.4
+2020-2024,126,wifi_and_connectivity,Wi-Fi e connettività,1,0,1,0,0,0.8
+2020-2024,126,billing_and_payment,Fatturazione e pagamento,5,0,5,0,0,4

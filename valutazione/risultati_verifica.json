@@ -1,0 +1,134 @@
+{
+  "cartella_risultati": "data/output",
+  "confronto": [
+    {
+      "misura": "recensioni",
+      "sviluppo": "1546/1546",
+      "test": "381/381",
+      "z_test_meno_sviluppo": null,
+      "differenza_oltre_il_rumore": null
+    },
+    {
+      "misura": "positive_tra_voti_4_5",
+      "sviluppo": "1130/1354 (83.5%)",
+      "test": "274/331 (82.8%)",
+      "z_test_meno_sviluppo": -0.3,
+      "differenza_oltre_il_rumore": false
+    },
+    {
+      "misura": "negative_o_miste_tra_voti_1_2",
+      "sviluppo": "86/86 (100.0%)",
+      "test": "26/26 (100.0%)",
+      "z_test_meno_sviluppo": 0.0,
+      "differenza_oltre_il_rumore": false
+    },
+    {
+      "misura": "con_almeno_un_aspetto",
+      "sviluppo": "1543/1546 (99.8%)",
+      "test": "381/381 (100.0%)",
+      "z_test_meno_sviluppo": 0.86,
+      "differenza_oltre_il_rumore": false
+    },
+    {
+      "misura": "con_temi_fuori_elenco",
+      "sviluppo": "1017/1546 (65.8%)",
+      "test": "245/381 (64.3%)",
+      "z_test_meno_sviluppo": -0.54,
+      "differenza_oltre_il_rumore": false
+    },
+    {
+      "misura": "segnalate",
+      "sviluppo": "215/1546 (13.9%)",
+      "test": "51/381 (13.4%)",
+      "z_test_meno_sviluppo": -0.26,
+      "differenza_oltre_il_rumore": false
+    },
+    {
+      "misura": "segnalate_per_contenuto",
+      "sviluppo": "190/1546 (12.3%)",
+      "test": "45/381 (11.8%)",
+      "z_test_meno_sviluppo": -0.26,
+      "differenza_oltre_il_rumore": false
+    },
+    {
+      "misura": "lingua_coerente_con_alfabeto",
+      "sviluppo": "38/39 (97.4%)",
+      "test": "15/15 (100.0%)",
+      "z_test_meno_sviluppo": 0.63,
+      "differenza_oltre_il_rumore": false
+    }
+  ],
+  "aspetti_medi_per_recensione": {
+    "sviluppo": 3.78,
+    "test": 3.79
+  },
+  "lingue_test": [
+    [
+      "en",
+      333
+    ],
+    [
+      "es",
+      12
+    ],
+    [
+      "ja",
+      8
+    ],
+    [
+      "it",
+      5
+    ],
+    [
+      "pt",
+      5
+    ],
+    [
+      "de",
+      5
+    ],
+    [
+      "zh",
+      3
+    ],
+    [
+      "fr",
+      2
+    ],
+    [
+      "ru",
+      2
+    ],
+    [
+      "ko",
+      2
+    ],
+    [
+      "sv",
+      1
+    ],
+    [
+      "el",
+      1
+    ],
+    [
+      "nl",
+      1
+    ],
+    [
+      "tr",
+      1
+    ]
+  ],
+  "gold_set": {
+    "recensioni_etichettate": 50,
+    "sentiment_complessivo_accuratezza_pct": 90.0,
+    "lingua_accuratezza_pct": 100.0,
+    "aspetti_precisione_pct": 92.3,
+    "aspetti_richiamo_pct": 82.5,
+    "aspetti_f1_pct": 87.2,
+    "sentiment_sugli_aspetti_in_comune_pct": 95.5,
+    "segnalazioni_precisione_pct": 60.0,
+    "segnalazioni_richiamo_pct": 100.0
+  }
+}

@@ -1,0 +1,384 @@
+{
+  "id": "verificaRecens01",
+  "name": "Verifica del sistema (metriche)",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "nodes": [
+    {
+      "id": "s01",
+      "name": "Nota 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -140
+      ],
+      "parameters": {
+        "content": "## Verifica del sistema\nA. sviluppo contro test (le recensioni di test non sono mai state usate per scrivere i prompt). B. accuratezza sul gold set. Scrive valutazione.json e valutazione.md accanto ai risultati.",
+        "width": 2440,
+        "height": 330,
+        "color": 4
+      }
+    },
+    {
+      "id": "n02",
+      "name": "Avvia verifica",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "n03",
+      "name": "Configurazione verifica",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "jsCode": "return [{ json: { cartella_risultati: ($env.OUTPUT_DIR || '/files/output').replace(/\\/+$/, '') } }];"
+      }
+    },
+    {
+      "id": "n04",
+      "name": "Leggi risultati",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        400,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "={{ ($env.OUTPUT_DIR || '/files/output') + '/recensioni_analizzate.json' }}",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n05",
+      "name": "Estrai risultati",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        600,
+        0
+      ],
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n06",
+      "name": "Leggi diagnostica",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "={{ ($env.OUTPUT_DIR || '/files/output') + '/recensioni_diagnostica.jsonl' }}",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n07",
+      "name": "Estrai diagnostica",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1000,
+        0
+      ],
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n08",
+      "name": "Leggi id di test",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1200,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "/files/valutazione/test_ids.txt",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n09",
+      "name": "Estrai id di test",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1400,
+        0
+      ],
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n10",
+      "name": "Leggi gold set",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        1600,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "/files/valutazione/gold_set.csv",
+        "options": {}
+      },
+      "executeOnce": true,
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "id": "n11",
+      "name": "Estrai gold set",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        1800,
+        0
+      ],
+      "parameters": {
+        "operation": "csv",
+        "options": {
+          "headerRow": true
+        }
+      },
+      "executeOnce": false,
+      "onError": "continueRegularOutput",
+      "alwaysOutputData": true
+    },
+    {
+      "id": "n12",
+      "name": "Leggi archivio",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2000,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "={{ $env.INPUT_FILE || '/files/input/ritz_carlton_reviews.csv' }}",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n13",
+      "name": "Estrai archivio",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        0
+      ],
+      "parameters": {
+        "operation": "csv",
+        "options": {
+          "headerRow": true
+        }
+      },
+      "executeOnce": false
+    },
+    {
+      "id": "n14",
+      "name": "Calcola metriche",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        2000,
+        200
+      ],
+      "parameters": {
+        "jsCode": "// VERIFICA DEL SISTEMA: METRICHE\n// A. Generalizzazione senza etichette: confronta le recensioni di SVILUPPO\n//    (usate per scrivere e provare i prompt) con quelle di TEST (tenute da parte).\n//    Se il sistema fosse tarato sulle recensioni viste, sul test peggiorerebbe.\n//    Una differenza conta solo se supera 2 errori standard (|z| >= 2).\n// B. Accuratezza sul gold set: recensioni di test etichettate alla cieca da un\n//    modello diverso, che non ha visto ne' i risultati ne' i prompt del sistema.\n// Scrive valutazione.json (per il codice) e valutazione.md (da leggere).\nconst crypto = require('crypto');\nconst cfg = $('Configurazione verifica').first().json;\n\nconst testo = (nodo) => String($(nodo).first().json.data ?? '');\nconst risultati = $('Estrai risultati').first().json.data ?? [];\nconst diagnostica = new Map(testo('Estrai diagnostica').split('\\n').filter((l) => l.trim()).map((l) => {\n  const d = JSON.parse(l);\n  return [d.review_id, d];\n}));\nconst testIds = new Set(testo('Estrai id di test').split(/\\s+/).filter(Boolean));\nconst pulisci = (s) => String(s ?? '').replace(/\\r\\n?/g, '\\n').trim();\nconst sorgente = new Map($('Estrai archivio').all().map((i) => {\n  const r = i.json;\n  const h = crypto.createHash('sha1').update([pulisci(r.publishedDate), pulisci(r.title), pulisci(r.text)].join('|'), 'utf8').digest('hex');\n  return ['R' + h.slice(0, 10), { rating: Number(r.rating), text: pulisci(r.text) }];\n}));\nlet gold = [];\ntry {\n  gold = $('Estrai gold set').all().map((i) => i.json).filter((g) => g.review_id && g.overall_sentiment);\n} catch (e) {\n  gold = [];\n}\n\n// ---------- strumenti statistici\nconst pct = (k, n) => (n ? Math.round((1000 * k) / n) / 10 : null);\nfunction wilson(k, n) {\n  if (!n) return null;\n  const z = 1.96, p = k / n, d = 1 + (z * z) / n;\n  const c = (p + (z * z) / (2 * n)) / d;\n  const m = (z * Math.sqrt((p * (1 - p)) / n + (z * z) / (4 * n * n))) / d;\n  return [Math.round(1000 * Math.max(0, c - m)) / 10, Math.round(1000 * Math.min(1, c + m)) / 10];\n}\nfunction z2(k1, n1, k0, n0) {\n  if (!n1 || !n0) return null;\n  const p = (k1 + k0) / (n1 + n0);\n  const se = Math.sqrt(p * (1 - p) * (1 / n1 + 1 / n0));\n  return se > 0 ? Math.round((100 * (k1 / n1 - k0 / n0)) / se) / 100 : 0;\n}\n// lingua deducibile dall'alfabeto, per controllare il codice lingua del modello\nfunction alfabeto(t) {\n  if (/[぀-ヿ]/.test(t)) return 'ja';\n  if (/[가-힯]/.test(t)) return 'ko';\n  if (/[一-鿿]/.test(t)) return 'zh';\n  if (/[Ѐ-ӿ]/.test(t)) return 'ru';\n  return null;\n}\n\n// ---------- A. sviluppo contro test\nconst voto = (r) => sorgente.get(r.review_id)?.rating;\nfunction misure(gruppo) {\n  const alti = gruppo.filter((r) => voto(r) >= 4);\n  const bassi = gruppo.filter((r) => voto(r) <= 2);\n  const conAlfabeto = gruppo.filter((r) => alfabeto(sorgente.get(r.review_id)?.text ?? ''));\n  return {\n    positive_tra_voti_4_5: [alti.filter((r) => r.overall_sentiment === 'positive').length, alti.length],\n    negative_o_miste_tra_voti_1_2: [bassi.filter((r) => ['negative', 'mixed'].includes(r.overall_sentiment)).length, bassi.length],\n    con_almeno_un_aspetto: [gruppo.filter((r) => r.aspects.length > 0).length, gruppo.length],\n    con_temi_fuori_elenco: [gruppo.filter((r) => (diagnostica.get(r.review_id)?.temi_fuori_elenco ?? []).length > 0).length, gruppo.length],\n    segnalate: [gruppo.filter((r) => r.needs_attention).length, gruppo.length],\n    segnalate_per_contenuto: [gruppo.filter((r) => (diagnostica.get(r.review_id)?.segnalazioni ?? []).length > 0).length, gruppo.length],\n    lingua_coerente_con_alfabeto: [conAlfabeto.filter((r) => r.language === alfabeto(sorgente.get(r.review_id).text)).length, conAlfabeto.length],\n  };\n}\nconst sviluppo = risultati.filter((r) => !testIds.has(r.review_id));\nconst test = risultati.filter((r) => testIds.has(r.review_id));\nconst ms = misure(sviluppo);\nconst mt = misure(test);\nconst confronto = Object.keys(ms).map((k) => {\n  const [ks, ns] = ms[k];\n  const [kt, nt] = mt[k];\n  const z = z2(kt, nt, ks, ns);\n  return {\n    misura: k,\n    sviluppo: { casi: ks, su: ns, pct: pct(ks, ns), ic95: wilson(ks, ns) },\n    test: { casi: kt, su: nt, pct: pct(kt, nt), ic95: wilson(kt, nt) },\n    z_test_meno_sviluppo: z,\n    differenza_oltre_il_rumore: z === null ? null : Math.abs(z) >= 2,\n  };\n});\nconst media = (g) => (g.length ? Math.round((100 * g.reduce((s, r) => s + r.aspects.length, 0)) / g.length) / 100 : null);\n\n// ---------- B. gold set\nlet metricheGold = null;\nif (gold.length) {\n  const perId = new Map(risultati.map((r) => [r.review_id, r]));\n  const diag = (id) => diagnostica.get(id) ?? {};\n  const etichette = ['positive', 'mixed', 'negative', 'neutral'];\n  const confusione = Object.fromEntries(etichette.map((a) => [a, Object.fromEntries(etichette.map((b) => [b, 0]))]));\n  let okOverall = 0, okLingua = 0, tp = 0, fp = 0, fn = 0, sentOk = 0, sentN = 0;\n  let segTp = 0, segFp = 0, segFn = 0, segTn = 0;\n  const disaccordi = [];\n  const perAspetto = {};\n  for (const g of gold) {\n    const r = perId.get(g.review_id);\n    if (!r) continue;\n    const atteso = String(g.overall_sentiment).trim();\n    if (confusione[atteso]?.[r.overall_sentiment] !== undefined) confusione[atteso][r.overall_sentiment]++;\n    if (atteso === r.overall_sentiment) okOverall++;\n    if (String(g.language ?? '').trim() === r.language) okLingua++;\n\n    const asp = {};\n    for (const p of String(g.aspects ?? '').split(';').map((s) => s.trim()).filter(Boolean)) {\n      const [a, s] = p.split(':').map((x) => x.trim());\n      if (a) asp[a] = s;\n    }\n    const sis = Object.fromEntries(r.aspects.map((a) => [a.aspect, a.sentiment]));\n    const comuni = Object.keys(asp).filter((a) => a in sis);\n    tp += comuni.length;\n    fp += Object.keys(sis).filter((a) => !(a in asp)).length;\n    fn += Object.keys(asp).filter((a) => !(a in sis)).length;\n    for (const a of comuni) {\n      sentN++;\n      if (asp[a] === sis[a]) sentOk++;\n    }\n    for (const a of new Set([...Object.keys(asp), ...Object.keys(sis)])) {\n      perAspetto[a] ??= { attesi: 0, trovati: 0, in_comune: 0 };\n      if (a in asp) perAspetto[a].attesi++;\n      if (a in sis) perAspetto[a].trovati++;\n      if (a in asp && a in sis) perAspetto[a].in_comune++;\n    }\n\n    const categorieAttese = String(g.attention_categories ?? '').split(';').map((s) => s.trim()).filter(Boolean);\n    const segnalataGold = categorieAttese.length > 0;\n    const segnalataSis = (diag(g.review_id).segnalazioni ?? []).length > 0;\n    if (segnalataGold && segnalataSis) segTp++;\n    else if (!segnalataGold && segnalataSis) segFp++;\n    else if (segnalataGold && !segnalataSis) segFn++;\n    else segTn++;\n\n    if (atteso !== r.overall_sentiment || segnalataGold !== segnalataSis) {\n      disaccordi.push({\n        review_id: g.review_id,\n        sentiment_atteso: atteso,\n        sentiment_sistema: r.overall_sentiment,\n        segnalazione_attesa: categorieAttese,\n        segnalazione_sistema: (diag(g.review_id).segnalazioni ?? []).map((s) => s.categoria),\n      });\n    }\n  }\n  const n = gold.length;\n  const prec = tp + fp ? tp / (tp + fp) : null;\n  const rich = tp + fn ? tp / (tp + fn) : null;\n  // kappa di Cohen sul sentiment complessivo: accordo oltre quello atteso per caso\n  const po = okOverall / n;\n  const pe = etichette.reduce((s, a) => s + (Object.values(confusione[a]).reduce((x, y) => x + y, 0) / n) * (etichette.reduce((x, b) => x + confusione[b][a], 0) / n), 0);\n  metricheGold = {\n    recensioni_etichettate: n,\n    sentiment_complessivo: { accuratezza_pct: pct(okOverall, n), ic95: wilson(okOverall, n), kappa_cohen: pe < 1 ? Math.round((100 * (po - pe)) / (1 - pe)) / 100 : null, matrice_confusione_atteso_per_sistema: confusione },\n    lingua: { accuratezza_pct: pct(okLingua, n), ic95: wilson(okLingua, n) },\n    aspetti: {\n      precisione_pct: prec === null ? null : Math.round(1000 * prec) / 10,\n      richiamo_pct: rich === null ? null : Math.round(1000 * rich) / 10,\n      f1_pct: prec && rich ? Math.round((1000 * 2 * prec * rich) / (prec + rich)) / 10 : null,\n      in_comune: tp, solo_sistema: fp, solo_gold: fn,\n      sentiment_corretto_sugli_aspetti_in_comune_pct: pct(sentOk, sentN),\n      ic95_sentiment: wilson(sentOk, sentN),\n      per_aspetto: perAspetto,\n    },\n    segnalazioni_per_contenuto: {\n      precisione_pct: pct(segTp, segTp + segFp),\n      richiamo_pct: pct(segTp, segTp + segFn),\n      vere_positive: segTp, false_positive: segFp, false_negative: segFn, vere_negative: segTn,\n    },\n    disaccordi,\n  };\n}\n\nconst valutazione = {\n  generata_il: new Date().toISOString(),\n  file_risultati: cfg.cartella_risultati,\n  avvertenza_gold_set: \"Gold set etichettato alla cieca da un modello diverso da quello del sistema, senza accesso ai risultati ne' ai prompt: e' un confronto tra modelli, non un'annotazione umana.\",\n  A_sviluppo_contro_test: {\n    recensioni: { sviluppo: sviluppo.length, test: test.length },\n    aspetti_medi_per_recensione: { sviluppo: media(sviluppo), test: media(test) },\n    confronto,\n  },\n  B_gold_set: metricheGold,\n};\n\n// ---------- versione da leggere\nconst fmt = (x) => (x === null || x === undefined ? '-' : String(x).replace('.', ','));\nconst righe = ['# Verifica del sistema', '', `Generata il ${valutazione.generata_il.slice(0, 10)} dai risultati in \\`${cfg.cartella_risultati}\\`.`, ''];\nrighe.push('## A. Sviluppo contro test (senza etichette)', '');\nrighe.push(`Recensioni di sviluppo: ${sviluppo.length}. Recensioni di test: ${test.length}. Una differenza conta solo se |z| >= 2.`, '');\nrighe.push('| misura | sviluppo | test | z | oltre il rumore |', '|---|---|---|---|---|');\nfor (const c of confronto) {\n  righe.push(`| ${c.misura.replace(/_/g, ' ')} | ${c.sviluppo.casi}/${c.sviluppo.su} (${fmt(c.sviluppo.pct)}%) | ${c.test.casi}/${c.test.su} (${fmt(c.test.pct)}%) | ${fmt(c.z_test_meno_sviluppo)} | ${c.differenza_oltre_il_rumore ? 'si' : 'no'} |`);\n}\nrighe.push('', `Aspetti medi per recensione: sviluppo ${fmt(media(sviluppo))}, test ${fmt(media(test))}.`, '');\nrighe.push('## B. Gold set', '');\nif (!metricheGold) righe.push('Gold set non presente (data/valutazione/gold_set.csv).');\nelse {\n  const g = metricheGold;\n  righe.push(valutazione.avvertenza_gold_set, '');\n  righe.push(`Recensioni etichettate: ${g.recensioni_etichettate}.`, '');\n  righe.push('| misura | valore | intervallo 95% |', '|---|---|---|');\n  righe.push(`| sentiment complessivo, accuratezza | ${fmt(g.sentiment_complessivo.accuratezza_pct)}% | ${fmt(g.sentiment_complessivo.ic95?.[0])}-${fmt(g.sentiment_complessivo.ic95?.[1])}% |`);\n  righe.push(`| sentiment complessivo, kappa di Cohen | ${fmt(g.sentiment_complessivo.kappa_cohen)} | |`);\n  righe.push(`| lingua, accuratezza | ${fmt(g.lingua.accuratezza_pct)}% | ${fmt(g.lingua.ic95?.[0])}-${fmt(g.lingua.ic95?.[1])}% |`);\n  righe.push(`| aspetti, precisione | ${fmt(g.aspetti.precisione_pct)}% | |`);\n  righe.push(`| aspetti, richiamo | ${fmt(g.aspetti.richiamo_pct)}% | |`);\n  righe.push(`| aspetti, F1 | ${fmt(g.aspetti.f1_pct)}% | |`);\n  righe.push(`| sentiment sugli aspetti in comune | ${fmt(g.aspetti.sentiment_corretto_sugli_aspetti_in_comune_pct)}% | ${fmt(g.aspetti.ic95_sentiment?.[0])}-${fmt(g.aspetti.ic95_sentiment?.[1])}% |`);\n  righe.push(`| segnalazioni per contenuto, precisione | ${fmt(g.segnalazioni_per_contenuto.precisione_pct)}% | |`);\n  righe.push(`| segnalazioni per contenuto, richiamo | ${fmt(g.segnalazioni_per_contenuto.richiamo_pct)}% | |`);\n  righe.push('', `Disaccordi da leggere: ${g.disaccordi.length} (elenco in valutazione.json).`);\n}\n\nconst file = (nome, contenuto, mime) => ({\n  json: { path: `${cfg.cartella_risultati}/${nome}` },\n  binary: { data: { data: Buffer.from(contenuto, 'utf8').toString('base64'), mimeType: mime, fileName: nome } },\n});\nreturn [\n  file('valutazione.json', JSON.stringify(valutazione, null, 2), 'application/json'),\n  file('valutazione.md', righe.join('\\n') + '\\n', 'text/markdown'),\n];\n"
+      }
+    },
+    {
+      "id": "n15",
+      "name": "Scrivi valutazione",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        2200,
+        200
+      ],
+      "parameters": {
+        "operation": "write",
+        "fileName": "={{ $json.path }}",
+        "dataPropertyName": "data",
+        "options": {}
+      }
+    }
+  ],
+  "connections": {
+    "Avvia verifica": {
+      "main": [
+        [
+          {
+            "node": "Configurazione verifica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Configurazione verifica": {
+      "main": [
+        [
+          {
+            "node": "Leggi risultati",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi risultati": {
+      "main": [
+        [
+          {
+            "node": "Estrai risultati",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai risultati": {
+      "main": [
+        [
+          {
+            "node": "Leggi diagnostica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi diagnostica": {
+      "main": [
+        [
+          {
+            "node": "Estrai diagnostica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai diagnostica": {
+      "main": [
+        [
+          {
+            "node": "Leggi id di test",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi id di test": {
+      "main": [
+        [
+          {
+            "node": "Estrai id di test",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai id di test": {
+      "main": [
+        [
+          {
+            "node": "Leggi gold set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi gold set": {
+      "main": [
+        [
+          {
+            "node": "Estrai gold set",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai gold set": {
+      "main": [
+        [
+          {
+            "node": "Leggi archivio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi archivio": {
+      "main": [
+        [
+          {
+            "node": "Estrai archivio",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai archivio": {
+      "main": [
+        [
+          {
+            "node": "Calcola metriche",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Calcola metriche": {
+      "main": [
+        [
+          {
+            "node": "Scrivi valutazione",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}

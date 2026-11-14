@@ -1,0 +1,51 @@
+review_id,language,overall_sentiment,aspects,attention_categories,note
+R6f5b8ec69d,de,negative,price_and_value:negative; room_view:positive; room_quality_and_comfort:negative; food_and_beverage:negative; staff_service:negative,,
+R2bff31eebe,ja,negative,hotel_facilities_and_ambience:negative; staff_service:negative; wifi_and_technology:negative; price_and_value:negative,,Wi-Fi a pagamento: messo sia su wifi sia su prezzo
+R11c5efa4e4,en,negative,staff_service:negative; check_in_and_check_out:positive; room_quality_and_comfort:positive; cleanliness:positive; room_view:positive; food_and_beverage:negative; price_and_value:negative,billing_dispute,"Dubbio su unresolved_complaint: l'hotel ha tentato un rimedio giudicato insufficiente, l'ospite ha rifiutato il colloquio; addebito poi stornato"
+R374a0a83ac,en,negative,check_in_and_check_out:negative; room_quality_and_comfort:negative,booking_failure,Attesa di oltre due ore al check-in e un letto per tre persone
+Rcc84ffa0ab,en,negative,cleanliness:negative; staff_service:negative; room_quality_and_comfort:negative; price_and_value:negative,health_hygiene; unresolved_complaint,"Titolo in portoghese, testo in inglese"
+R47a9e079b5,en,negative,check_in_and_check_out:negative; room_quality_and_comfort:negative; bathroom:negative; cleanliness:negative; staff_service:negative,health_hygiene; booking_failure,booking_failure dubbio: upgrade e omaggio di benvenuto del livello fedelta' negati
+R949a572b9a,en,negative,room_view:negative; club_lounge:negative; location:positive; staff_service:negative; price_and_value:negative,,Accesso alla lounge non era promesso: nessuna segnalazione
+Rb7dc8ec2ad,en,negative,noise_and_soundproofing:negative; staff_service:negative,severe_service_failure; unresolved_complaint,"Rumore causato dal personale; reclami quotidiani senza soluzione; staff_misconduct non messo (incuria, non episodio preciso)"
+R8641eea77b,en,negative,cleanliness:negative; room_quality_and_comfort:negative; hotel_facilities_and_ambience:negative; price_and_value:negative; staff_service:negative,,Presa della lampada penzolante: possibile sicurezza ma non descritta come pericolo
+R4bf955719f,en,negative,club_lounge:negative,booking_failure,"Giudizio sull'accesso alla lounge negato, non sulla lounge in se'; ha cancellato prima di soggiornare"
+R4703149c24,en,negative,staff_service:negative; price_and_value:negative,,"Allusione a oggetti personali buttati e a un rimedio insufficiente, ma generica e riferita alla catena: non esplicita"
+Rb1ef371d20,en,negative,hotel_facilities_and_ambience:negative; room_quality_and_comfort:negative; cleanliness:negative,health_hygiene,Unghia nel letto
+R778c912164,en,negative,club_lounge:negative; staff_service:negative; bathroom:negative; room_quality_and_comfort:negative; price_and_value:negative,,Upgrade soggetto a disponibilita' e lounge a pagamento: non considerati vantaggi promessi negati; dichiara di non aver reclamato
+Re892951e78,en,negative,staff_service:negative; room_quality_and_comfort:negative; price_and_value:negative; food_and_beverage:negative; room_view:negative; location:positive; hotel_facilities_and_ambience:negative,billing_dispute,"Letto aggiuntivo negato ma addebitato; scortesia generica, non staff_misconduct"
+R31aef61764,en,negative,room_quality_and_comfort:negative; hotel_facilities_and_ambience:negative; price_and_value:negative; staff_service:negative,severe_service_failure; unresolved_complaint,Riscaldamento/aria condizionata mai sistemati dalla manutenzione
+R3347403965,ko,positive,price_and_value:positive; staff_service:positive,,Caro ma ritenuto all'altezza: prezzo positivo
+Rbe800476f8,ja,mixed,location:positive; price_and_value:negative; hotel_facilities_and_ambience:negative,,
+R525cdab8f7,en,positive,hotel_facilities_and_ambience:positive; room_view:positive; location:positive; room_quality_and_comfort:positive; staff_service:positive; food_and_beverage:positive,,Chiusa tiepida (non e' il preferito) ma tono complessivo positivo
+R0b4441ce2c,en,mixed,location:positive; room_view:positive; hotel_facilities_and_ambience:negative,,Hotel definito da 3 stelle (giudizio generico messo su strutture) ma tornerebbe: tra mixed e positive
+R00975947cd,en,negative,room_quality_and_comfort:negative; club_lounge:negative; price_and_value:negative,,Club level promesso solo se disponibile: non booking_failure
+Rd146fd43bc,en,negative,location:positive; staff_service:negative; room_view:negative; check_in_and_check_out:negative; room_quality_and_comfort:neutral,booking_failure; staff_misconduct,"Tra negative e mixed: suite e maggiordomo lodati, ma prevale la critica"
+Rf7c76150b4,en,mixed,room_quality_and_comfort:positive; room_view:positive; bathroom:positive; check_in_and_check_out:negative; club_lounge:negative; staff_service:negative,booking_failure,Camera non pronta per due ore e mezza
+Ra218d18b98,en,mixed,room_view:negative; room_quality_and_comfort:positive; noise_and_soundproofing:positive; staff_service:negative; price_and_value:negative; location:positive,booking_failure,Camera con vista citta' pagata e non ricevuta; tra mixed e negative
+R7b0b6935e6,en,negative,room_quality_and_comfort:negative; bathroom:negative; food_and_beverage:negative; staff_service:negative; price_and_value:negative,,
+R85efd0e96d,en,mixed,staff_service:positive; club_lounge:negative; hotel_facilities_and_ambience:negative; room_quality_and_comfort:negative,,Odore corporeo di un cameriere: non rientra in health_hygiene come definita
+R52643c94ef,es,positive,room_quality_and_comfort:positive; food_and_beverage:positive; price_and_value:neutral,,Un po' caro ma previsto: prezzo neutral
+R5914218f7b,de,positive,location:positive; staff_service:positive; room_quality_and_comfort:positive; food_and_beverage:positive,,
+Ra9ed976269,it,positive,room_quality_and_comfort:positive; location:positive; cleanliness:positive; staff_service:positive; price_and_value:negative; hotel_facilities_and_ambience:negative,,Critica alla clientela snob messa su atmosfera: dubbio
+R53ed9eb795,tr,positive,location:positive; hotel_facilities_and_ambience:positive,,
+R1161a91d86,en,positive,staff_service:positive; room_quality_and_comfort:positive; location:positive; food_and_beverage:positive,,
+R4c8b243408,en,positive,room_view:positive; staff_service:positive; location:positive,,
+Rc40c110d86,en,positive,staff_service:positive; room_quality_and_comfort:positive; location:positive,,
+Rdefc720c9f,en,positive,room_quality_and_comfort:positive; bathroom:positive; staff_service:positive; food_and_beverage:positive; location:positive,,
+R813ca2bc5f,en,positive,location:positive; staff_service:positive; noise_and_soundproofing:positive; hotel_facilities_and_ambience:positive; food_and_beverage:negative; price_and_value:negative; spa_and_wellness:positive,,
+R43cae00ece,en,positive,staff_service:positive; food_and_beverage:positive,,"Figlia celiaca stata male in un ristorante esterno consigliato dal concierge: terzi, nessuna segnalazione (dubbio)"
+R5c6bca721f,en,positive,staff_service:positive,,
+Rcffcd4f578,en,positive,location:positive; hotel_facilities_and_ambience:positive; staff_service:positive; room_quality_and_comfort:positive; noise_and_soundproofing:positive; club_lounge:positive,,
+Rb3ffee4338,en,positive,location:positive; room_view:positive; hotel_facilities_and_ambience:positive; wifi_and_technology:negative,,
+R1d7ac6211c,en,positive,room_quality_and_comfort:positive; bathroom:positive; location:positive; staff_service:positive; club_lounge:negative,,
+R9aead8531f,en,positive,staff_service:positive; location:positive; hotel_facilities_and_ambience:positive,,
+R3b37327751,en,positive,room_quality_and_comfort:negative; location:positive; food_and_beverage:positive,,
+Rd90bc274e7,en,positive,staff_service:positive; check_in_and_check_out:positive; room_view:positive; hotel_facilities_and_ambience:positive,,
+R23967c8a93,en,positive,room_quality_and_comfort:positive; room_view:positive; staff_service:positive,,
+Rfd27d5a063,en,positive,staff_service:positive,,
+R6f523e8af9,en,positive,staff_service:positive; club_lounge:positive,,"Accenna a un problema passato, gestito bene: nessuna segnalazione"
+R84eb1e19b9,en,positive,location:positive; food_and_beverage:positive; room_view:negative,,Avvertenza sulle camere senza vista
+Rbf8d8d1385,en,positive,staff_service:positive; room_quality_and_comfort:positive; room_view:positive; club_lounge:positive,,
+Rae52e7c1ad,en,positive,location:positive; staff_service:positive,,
+R4317e5b7ea,en,positive,noise_and_soundproofing:positive; staff_service:positive; food_and_beverage:positive,,
+R2e9be52975,en,positive,staff_service:positive; room_quality_and_comfort:positive,,

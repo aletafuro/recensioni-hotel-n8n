@@ -1,0 +1,62 @@
+{
+  "_istruzioni": "Contesto del dominio letto dal workflow all'avvio. Per analizzare recensioni di un'altra attivita' (un'app, un ristorante, un negozio online...) si cambia solo questo file. Il contesto spiega chi scrive e chi legge e definisce le segnalazioni; NON elenca servizi o aspetti, perche' gli aspetti devono emergere dalle recensioni.",
+  "oggetto_recensito": "un hotel di lusso",
+  "descrizione": "Hotel di lusso in una grande citta'. Le recensioni sono pubblicate dagli ospiti su una piattaforma pubblica di recensioni di viaggio, in piu' lingue.",
+  "autori_delle_recensioni": "ospiti dell'hotel",
+  "lettori_dei_risultati": "la direzione dell'hotel",
+  "lingua_del_digest": "italiano",
+  "voto": {
+    "minimo": 1,
+    "massimo": 5,
+    "basso_fino_a": 2,
+    "alto_da": 4
+  },
+  "critiche_ordinarie_da_non_segnalare": "camera piccola, colazione cara, ascensore lento, arredamento datato",
+  "categorie_di_segnalazione": {
+    "safety_security": {
+      "nome": "sicurezza",
+      "priorita": "alta",
+      "definizione": "minacce, aggressioni, furti, intrusi, situazioni o condizioni pericolose"
+    },
+    "health_hygiene": {
+      "nome": "igiene e salute",
+      "priorita": "alta",
+      "definizione": "insetti o cimici, muffa, camera, bagno o biancheria sporchi, intossicazione alimentare, malattia causata dal soggiorno"
+    },
+    "discrimination_harassment": {
+      "nome": "discriminazione o molestie",
+      "priorita": "alta",
+      "definizione": "discriminazione (origine, nazionalita', genere, religione, disabilita'...) o molestie"
+    },
+    "property_damage_or_loss": {
+      "nome": "oggetti persi o danneggiati",
+      "priorita": "alta",
+      "definizione": "oggetti dell'ospite persi, rubati o danneggiati"
+    },
+    "staff_misconduct": {
+      "nome": "comportamento del personale",
+      "priorita": "media",
+      "definizione": "un episodio preciso di comportamento ostile, scorretto, umiliante o poco professionale del personale (non un generico 'personale poco gentile')"
+    },
+    "billing_dispute": {
+      "nome": "addebiti contestati",
+      "priorita": "media",
+      "definizione": "addebiti inattesi, sbagliati o doppi, problemi con depositi o rimborsi"
+    },
+    "booking_failure": {
+      "nome": "prenotazione non rispettata",
+      "priorita": "media",
+      "definizione": "prenotazione non onorata, tipo di camera sbagliato, overbooking, camera non pronta per ore, vantaggi promessi negati"
+    },
+    "severe_service_failure": {
+      "nome": "disservizio grave",
+      "priorita": "media",
+      "definizione": "un guasto o disservizio serio che ha rovinato il soggiorno (per esempio niente acqua calda, niente riscaldamento o aria condizionata, camera guasta, impossibile dormire)"
+    },
+    "unresolved_complaint": {
+      "nome": "reclamo non risolto",
+      "priorita": "media",
+      "definizione": "l'ospite ha reclamato e il problema non e' stato risolto, oppure dichiara di voler andare oltre (vie legali, contestazione del pagamento, reclamo alla sede, non tornera' per come e' stato gestito)"
+    }
+  }
+}

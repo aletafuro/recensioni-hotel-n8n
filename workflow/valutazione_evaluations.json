@@ -1,0 +1,326 @@
+{
+  "id": "evalRecensioni01",
+  "name": "Valutazione: Evaluations",
+  "active": false,
+  "settings": {
+    "executionOrder": "v1",
+    "saveManualExecutions": true
+  },
+  "nodes": [
+    {
+      "id": "s01",
+      "name": "Nota 1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -40,
+        -160
+      ],
+      "parameters": {
+        "content": "## Valutazione nella scheda Evaluations\nOgni riga del gold set viene confrontata con l'analisi del sistema. Metriche: sentiment complessivo (categorization), lingua, aspetti (precisione, richiamo, F1), giudizio sugli aspetti in comune, segnalazione. Prima di lanciarla: scegliere nella lista dei due nodi la tabella 'gold_set_recensioni' creata dal workflow 'Valutazione: carica gold set'.",
+        "width": 1860,
+        "height": 360,
+        "color": 6
+      }
+    },
+    {
+      "id": "n02",
+      "name": "Gold set (Evaluation Trigger)",
+      "type": "n8n-nodes-base.evaluationTrigger",
+      "typeVersion": 4.7,
+      "position": [
+        0,
+        0
+      ],
+      "parameters": {
+        "source": "dataTable",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultName": "gold_set_recensioni"
+        }
+      }
+    },
+    {
+      "id": "n03",
+      "name": "Leggi risultati",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        200,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "={{ ($env.OUTPUT_DIR || '/files/output') + '/recensioni_analizzate.json' }}",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n04",
+      "name": "Estrai risultati",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        400,
+        0
+      ],
+      "parameters": {
+        "operation": "fromJson",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n05",
+      "name": "Leggi diagnostica",
+      "type": "n8n-nodes-base.readWriteFile",
+      "typeVersion": 1,
+      "position": [
+        600,
+        0
+      ],
+      "parameters": {
+        "fileSelector": "={{ ($env.OUTPUT_DIR || '/files/output') + '/recensioni_diagnostica.jsonl' }}",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n06",
+      "name": "Estrai diagnostica",
+      "type": "n8n-nodes-base.extractFromFile",
+      "typeVersion": 1,
+      "position": [
+        800,
+        0
+      ],
+      "parameters": {
+        "operation": "text",
+        "options": {}
+      },
+      "executeOnce": true
+    },
+    {
+      "id": "n07",
+      "name": "Confronta con il sistema",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        1000,
+        0
+      ],
+      "parameters": {
+        "jsCode": "// CONFRONTO DI UNA RIGA DEL GOLD SET CON L'OUTPUT DEL SISTEMA\n// La scheda Evaluations di n8n fa passare il gold set una riga alla volta.\n// Per ogni riga si cerca l'analisi prodotta dal sistema (recensioni_analizzate.json\n// e recensioni_diagnostica.jsonl) e si calcolano le metriche della riga.\n// n8n poi fa la media delle metriche su tutte le righe.\nconst riga = $('Gold set (Evaluation Trigger)').first().json;\nconst risultati = $('Estrai risultati').first().json.data ?? [];\nconst diagnostica = String($('Estrai diagnostica').first().json.data ?? '')\n  .split('\\n')\n  .filter((l) => l.trim())\n  .map((l) => JSON.parse(l));\n\nconst r = risultati.find((x) => x.review_id === riga.review_id);\nif (!r) throw new Error(`Recensione ${riga.review_id} non trovata nei risultati del sistema`);\nconst d = diagnostica.find((x) => x.review_id === riga.review_id) ?? {};\n\nconst atteso = {};\nfor (const p of String(riga.aspects ?? '').split(';').map((s) => s.trim()).filter(Boolean)) {\n  const [a, s] = p.split(':').map((x) => x.trim());\n  if (a) atteso[a] = s;\n}\nconst sistema = Object.fromEntries(r.aspects.map((a) => [a.aspect, a.sentiment]));\nconst comuni = Object.keys(atteso).filter((a) => a in sistema);\nconst nA = Object.keys(atteso).length;\nconst nS = Object.keys(sistema).length;\n// riga senza aspetti da entrambe le parti: accordo pieno\nconst precisione = nS ? comuni.length / nS : nA ? 0 : 1;\nconst richiamo = nA ? comuni.length / nA : nS ? 0 : 1;\nconst f1 = precisione + richiamo ? (2 * precisione * richiamo) / (precisione + richiamo) : 0;\n\nconst categorieAttese = String(riga.attention_categories ?? '').split(';').map((s) => s.trim()).filter(Boolean);\nconst categorieSistema = [...new Set((d.segnalazioni ?? []).map((s) => s.categoria))];\n\nconst comeTesto = (o) => Object.entries(o).map(([a, s]) => `${a}:${s}`).join('; ');\nreturn [{\n  json: {\n    review_id: riga.review_id,\n    atteso_overall: String(riga.overall_sentiment ?? '').trim(),\n    sistema_overall: r.overall_sentiment,\n    sistema_language: r.language,\n    sistema_aspects: comeTesto(sistema),\n    sistema_categorie: categorieSistema.join('; '),\n    metriche: {\n      lingua_corretta: String(riga.language ?? '').trim() === r.language ? 1 : 0,\n      aspetti_precisione: Math.round(1000 * precisione) / 1000,\n      aspetti_richiamo: Math.round(1000 * richiamo) / 1000,\n      aspetti_f1: Math.round(1000 * f1) / 1000,\n      // conteggi, non rapporti: se una riga non ha aspetti in comune il rapporto non esiste.\n      // media(giudizi giusti) / media(aspetti in comune) = accuratezza del sentiment sugli aspetti\n      aspetti_in_comune: comuni.length,\n      aspetti_giudizio_giusto: comuni.filter((a) => atteso[a] === sistema[a]).length,\n      segnalazione_corretta: (categorieAttese.length > 0) === (categorieSistema.length > 0) ? 1 : 0,\n    },\n  },\n}];\n"
+      }
+    },
+    {
+      "id": "n08",
+      "name": "Registra output",
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1200,
+        0
+      ],
+      "parameters": {
+        "operation": "setOutputs",
+        "source": "dataTable",
+        "dataTableId": {
+          "__rl": true,
+          "mode": "list",
+          "value": "",
+          "cachedResultName": "gold_set_recensioni"
+        },
+        "outputs": {
+          "values": [
+            {
+              "outputName": "sistema_overall_sentiment",
+              "outputValue": "={{ $json.sistema_overall }}"
+            },
+            {
+              "outputName": "sistema_language",
+              "outputValue": "={{ $json.sistema_language }}"
+            },
+            {
+              "outputName": "sistema_aspects",
+              "outputValue": "={{ $json.sistema_aspects }}"
+            },
+            {
+              "outputName": "sistema_categorie",
+              "outputValue": "={{ $json.sistema_categorie }}"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "n09",
+      "name": "Metrica: sentiment complessivo",
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1400,
+        0
+      ],
+      "parameters": {
+        "operation": "setMetrics",
+        "metric": "categorization",
+        "expectedAnswer": "={{ $('Confronta con il sistema').first().json.atteso_overall }}",
+        "actualAnswer": "={{ $('Confronta con il sistema').first().json.sistema_overall }}"
+      }
+    },
+    {
+      "id": "n10",
+      "name": "Metriche: aspetti, lingua, segnalazioni",
+      "type": "n8n-nodes-base.evaluation",
+      "typeVersion": 4.8,
+      "position": [
+        1600,
+        0
+      ],
+      "parameters": {
+        "operation": "setMetrics",
+        "metric": "customMetrics",
+        "metrics": {
+          "assignments": [
+            {
+              "id": "m0",
+              "name": "lingua_corretta",
+              "type": "number",
+              "value": "={{ $('Confronta con il sistema').first().json.metriche.lingua_corretta }}"
+            },
+            {
+              "id": "m1",
+              "name": "aspetti_precisione",
+              "type": "number",
+              "value": "={{ $('Confronta con il sistema').first().json.metriche.aspetti_precisione }}"
+            },
+            {
+              "id": "m2",
+              "name": "aspetti_richiamo",
+              "type": "number",
+              "value": "={{ $('Confronta con il sistema').first().json.metriche.aspetti_richiamo }}"
+            },
+            {
+              "id": "m3",
+              "name": "aspetti_f1",
+              "type": "number",
+              "value": "={{ $('Confronta con il sistema').first().json.metriche.aspetti_f1 }}"
+            },
+            {
+              "id": "m4",
+              "name": "aspetti_in_comune",
+              "type": "number",
+              "value": "={{ $('Confronta con il sistema').first().json.metriche.aspetti_in_comune }}"
+            },
+            {
+              "id": "m5",
+              "name": "aspetti_giudizio_giusto",
+              "type": "number",
+              "value": "={{ $('Confronta con il sistema').first().json.metriche.aspetti_giudizio_giusto }}"
+            },
+            {
+              "id": "m6",
+              "name": "segnalazione_corretta",
+              "type": "number",
+              "value": "={{ $('Confronta con il sistema').first().json.metriche.segnalazione_corretta }}"
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "connections": {
+    "Gold set (Evaluation Trigger)": {
+      "main": [
+        [
+          {
+            "node": "Leggi risultati",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi risultati": {
+      "main": [
+        [
+          {
+            "node": "Estrai risultati",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai risultati": {
+      "main": [
+        [
+          {
+            "node": "Leggi diagnostica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Leggi diagnostica": {
+      "main": [
+        [
+          {
+            "node": "Estrai diagnostica",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Estrai diagnostica": {
+      "main": [
+        [
+          {
+            "node": "Confronta con il sistema",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Confronta con il sistema": {
+      "main": [
+        [
+          {
+            "node": "Registra output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Registra output": {
+      "main": [
+        [
+          {
+            "node": "Metrica: sentiment complessivo",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Metrica: sentiment complessivo": {
+      "main": [
+        [
+          {
+            "node": "Metriche: aspetti, lingua, segnalazioni",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "pinData": {}
+}

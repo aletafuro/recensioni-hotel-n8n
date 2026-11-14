@@ -1,0 +1,171 @@
+# Analisi delle recensioni di un hotel con n8n
+
+Workflow n8n che legge l'archivio delle recensioni di un hotel e produce, senza interventi manuali:
+
+- l'analisi di ogni recensione (lingua, sentiment complessivo, sentiment per aspetto, segnalazione per la direzione con il motivo);
+- l'elenco degli aspetti emersi dalle recensioni, con una descrizione;
+- l'aggregazione per aspetto, sull'intero archivio e nel tempo;
+- il digest per la direzione, in italiano.
+
+Le scelte progettuali, i limiti e la verifica su recensioni non usate durante lo sviluppo sono nella [relazione tecnica](RELAZIONE.md).
+
+## Cosa serve
+
+- **Docker** con Docker Compose (Docker Desktop su Windows e macOS). Non serve installare n8n: l'immagine `n8nio/n8n:2.29.10` viene scaricata al primo avvio.
+- Una **chiave API OpenAI**. Il modello predefinito è `gpt-4.1-mini`; per l'archivio completo la spesa è dell'ordine di 1-2 dollari.
+
+## Avvio in tre passi
+
+Dalla cartella del progetto:
+
+1. Copia il file di esempio della configurazione e inserisci la chiave:
+
+   ```bash
+   cp .env.example .env
+   ```
+
+   Poi apri `.env` e scrivi la chiave dopo `OPENAI_API_KEY=`. Su Windows, in PowerShell, il comando è `copy .env.example .env`.
+
+2. Lancia il workflow completo:
+
+   ```bash
+   docker compose run --rm esegui
+   ```
+
+   Il container importa il workflow in n8n, crea la credenziale OpenAI leggendo la chiave dal `.env` ed esegue tutto. Sull'archivio completo ci vuole circa mezz'ora: quasi tutto il tempo va nel guardrail che controlla le recensioni una per una.
+
+3. I risultati sono in `data/output/`. Un giro riuscito finisce con l'esecuzione segnata come riuscita e con 1.927 oggetti in `recensioni_analizzate.json`.
+
+   **Attenzione:** un nuovo giro sovrascrive i risultati di questo repository. Per conservarli, copia prima la cartella o usa un'altra cartella di uscita (`-e OUTPUT_DIR=/files/nuovo_giro`). I numeri di un nuovo giro saranno vicini ma non identici, perché il modello non risponde sempre allo stesso modo (relazione, sezione 9).
+
+   I file:
+
+   | file | contenuto |
+   |---|---|
+   | `recensioni_analizzate.json` | un oggetto per recensione, nello schema richiesto |
+   | `recensioni_analizzate.jsonl` | lo stesso, una riga per recensione |
+   | `aspetti.json` | elenco finale degli aspetti con descrizione e temi raggruppati |
+   | `aggregazione.json` | conteggi, classifiche, periodi, andamento nel tempo, segnalazioni |
+   | `digest.md` | testo per la direzione |
+   | `esecuzione.json` | diagnostica: anomalie del file, guardrail, ritentativi, verifiche del digest |
+   | `recensioni_diagnostica.jsonl` | dettaglio per recensione: segnalazioni con la frase di prova, temi fuori elenco |
+   | `registro_giro.json` | durata del giro, token e costo per fase (il guardrail con il modello e' una stima) |
+   | `tabella_recensioni_aspetti.csv` | per Tableau, Excel o Power BI: una riga per ogni coppia recensione-aspetto, più una riga con l'aspetto vuoto per ogni recensione senza aspetti |
+   | `tabella_aspetti_per_periodo.csv` | per Tableau, Excel o Power BI: una riga per ogni coppia periodo-aspetto, con i conteggi |
+
+### Elenco fisso degli aspetti
+
+Gli aspetti usati per l'analisi stanno in `data/aspetti/aspetti_fissi.json`, con una versione: così i numeri di giri diversi si possono confrontare. Il file è nato da una scoperta automatica sulle recensioni (`aspetti_v1.json`) ed è stato poi rivisto. Le modifiche e i loro motivi sono scritti dentro il file. Per questo il giro in `data/output/` non contiene la scoperta: un giro completo con la scoperta degli aspetti è in `data/output_scoperta/`. Si rifà con `docker compose run --rm -e RISCOPRI_ASPETTI=true -e OUTPUT_DIR=/files/output_scoperta esegui`.
+
+Per far emergere di nuovo gli aspetti dalle recensioni, senza usare l'elenco fisso:
+
+```bash
+docker compose run --rm -e RISCOPRI_ASPETTI=true esegui
+```
+
+Con un file di recensioni di un'altra attività, l'elenco fisso non c'è, oppure si toglie: in quel caso il workflow fa sempre la scoperta.
+
+### Prova veloce
+
+Per vedere il flusso girare in pochi minuti su un campione ripetibile di 50 recensioni, salvando i risultati in una cartella a parte:
+
+```bash
+docker compose run --rm -e LIMIT=50 -e OUTPUT_DIR=/files/prova esegui
+```
+
+### Con l'interfaccia di n8n
+
+```bash
+docker compose up -d n8n
+```
+
+Poi apri http://localhost:5678. Al primo accesso n8n chiede di creare un utente locale (resta sul tuo computer). Il workflow **Analisi recensioni hotel** è già importato con la sua credenziale: aprilo e premi *Execute workflow*. Per fermare n8n:
+
+```bash
+docker compose down
+```
+
+## Verifica del sistema
+
+Dopo l'esecuzione completa, le metriche si calcolano con:
+
+```bash
+docker compose run --rm verifica
+```
+
+La verifica non chiama il modello, ma Docker Compose chiede comunque che `OPENAI_API_KEY` nel `.env` non sia vuota (basta un valore qualsiasi).
+
+Il workflow **Verifica del sistema (metriche)** legge i risultati in `data/output/` e scrive accanto `valutazione.json` e `valutazione.md`. Contengono:
+
+- **A. sviluppo contro test:** le recensioni di test (`data/valutazione/test_ids.txt`) non sono mai state usate durante lo sviluppo; se il sistema fosse tarato su quelle viste, sul test peggiorerebbe;
+- **B. gold set:** accuratezza rispetto alle 50 recensioni di test etichettate in `data/valutazione/gold_set.csv`.
+
+Le stesse metriche le calcola, in modo indipendente, lo script Python `valutazione/verifica_generalizzazione.py` (controllo incrociato).
+
+### Nella scheda Evaluations di n8n
+
+Con l'interfaccia accesa (`docker compose up -d n8n`):
+
+1. apri il workflow **Valutazione: carica gold set** e premi *Execute workflow*: crea la Data Table `gold_set_recensioni` con il gold set;
+2. apri il workflow **Valutazione: Evaluations** e, nei nodi *Gold set (Evaluation Trigger)* e *Registra output*, scegli la tabella `gold_set_recensioni` dall'elenco. Serve solo la prima volta: n8n assegna alla tabella un identificativo interno nuovo su ogni macchina;
+3. nella scheda **Evaluations** del workflow premi *Run evaluation*: per ogni recensione vedi il confronto con il gold set e la media delle metriche.
+
+## Se qualcosa non va
+
+- **Linux, errore di permessi su `data/`:** il container scrive con l'utente `node` (uid 1000). Se il tuo utente ha un uid diverso, dai i permessi di scrittura alla cartella: `chmod -R a+w data`.
+- **Il giro si interrompe** (rete, limiti dell'API): basta rilanciarlo: il giro ricomincia da capo. Dentro un giro, le recensioni la cui analisi fallisce vengono già ritentate da sole.
+- **Il file `docker-compose.override.yml`**, se presente, serve solo sul computer dell'autrice e va cancellato: Docker Compose lo caricherebbe da solo.
+
+## Configurazione
+
+Tutto si regola nel file `.env` (vedi `.env.example`). Le voci principali sono:
+
+| variabile | predefinito | significato |
+|---|---|---|
+| `OPENAI_API_KEY` | (obbligatoria) | chiave OpenAI |
+| `LLM_MODEL` | `gpt-4.1-mini` | modello per scoperta degli aspetti, analisi e digest |
+| `GUARDRAIL_MODEL` | `gpt-4.1-mini` | modello dei guardrail con controllo via LLM |
+| `OPENAI_BASE_URL` | `https://api.openai.com/v1` | endpoint compatibile con l'API OpenAI |
+| `INPUT_FILE` | `/files/input/ritz_carlton_reviews.csv` | file da analizzare (`data/` del progetto = `/files` nel container) |
+| `OUTPUT_DIR` | `/files/output` | cartella dei risultati |
+| `LIMIT` | `0` | 0 = tutte le recensioni; N = campione ripetibile di N recensioni |
+| `BATCH_SIZE` | `5` | recensioni per chiamata nell'analisi |
+| `DISCOVERY_SAMPLE` | `240` | recensioni lette per far emergere gli aspetti |
+| `MIN_REVIEWS_PER_PERIOD` | `100` | minimo di recensioni per periodo nell'andamento nel tempo |
+| `CONTEXT_FILE` | `/files/contesto/contesto.json` | contesto del dominio: chi è recensito, chi legge, categorie di segnalazione |
+| `ASPECTS_FILE` | `/files/aspetti/aspetti_fissi.json` | elenco fisso degli aspetti (se manca, gli aspetti emergono dalle recensioni) |
+| `RISCOPRI_ASPETTI` | `false` | `true` per ignorare l'elenco fisso e far emergere di nuovo gli aspetti |
+
+Per analizzare un altro file basta copiarlo in `data/input/` e indicare `INPUT_FILE=/files/input/<nome>.csv`. Il file deve avere le colonne `title`, `rating`, `publishedDate`, `text` (`travelDate` è facoltativa).
+
+## Struttura del progetto
+
+```
+docker-compose.yml          avvio di n8n (versione fissata) e dell'esecuzione completa
+.env.example                configurazione da copiare in .env
+docker/crea_credenziale.js  crea nel container la credenziale OpenAI dalla variabile d'ambiente
+workflow/
+  analisi_recensioni.json   IL WORKFLOW (si importa in n8n)
+  src/*.js                  codice dei nodi Code, uno per file
+  build_workflow.py         rimonta il workflow da src/ (serve solo se si modifica il codice)
+data/
+  input/                    archivio delle recensioni
+  output/                   risultati dell'ultima esecuzione completa
+  dev/, test/               divisione sviluppo / test usata per la verifica
+valutazione/                script e risultati della verifica su recensioni non usate nello sviluppo
+RELAZIONE.md                relazione tecnica
+```
+
+## Modificare il workflow
+
+Il codice dei nodi Code sta in `workflow/src/`, un file per nodo, così si legge e si confronta facilmente. Dopo una modifica si rimonta il workflow con Python 3:
+
+```bash
+python workflow/build_workflow.py
+```
+
+e lo si rilancia: a ogni avvio il container reimporta il workflow aggiornato. Chi preferisce lavorare nell'interfaccia di n8n può farlo direttamente e poi esportare il workflow da lì.
+
+## Dati
+
+Dataset: [Ritz Carlton New York: 1900+ TripAdvisor Reviews](https://www.kaggle.com/datasets/kanchana1990/ritz-carlton-ny-2k-tripadvisor-reviews) (Kaggle), file `ritz_carlton_reviews.csv`, 1.927 recensioni.
