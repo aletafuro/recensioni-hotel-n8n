@@ -2,3 +2,9 @@
 data/prove/
 __pycache__/
 docker-compose.override.yml
+
+# testi delle recensioni (da scaricare da Kaggle, vedi README)
+data/input/*.csv
+data/dev/
+data/test/
+data/valutazione/gold_da_etichettare.csv

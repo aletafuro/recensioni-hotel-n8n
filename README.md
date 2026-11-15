@@ -170,4 +170,12 @@ e lo si rilancia: a ogni avvio il container reimporta il workflow aggiornato. Ch
 
 ## Dati
 
-Dataset: [Ritz Carlton New York: 1900+ TripAdvisor Reviews](https://www.kaggle.com/datasets/kanchana1990/ritz-carlton-ny-2k-tripadvisor-reviews) (Kaggle), file `ritz_carlton_reviews.csv`, 1.927 recensioni.
+Dataset: [Ritz Carlton New York: 1900+ TripAdvisor Reviews](https://www.kaggle.com/datasets/kanchana1990/ritz-carlton-ny-2k-tripadvisor-reviews) di Kanchana1990 su Kaggle, licenza ODC Attribution License (ODC-By), 1.927 recensioni pubblicate su TripAdvisor.
+
+**I testi delle recensioni non sono in questo repository.** La licenza del dataset permette di ridistribuirlo citando la fonte, ma le recensioni vengono da TripAdvisor, che ha i suoi termini d'uso: per prudenza qui ci sono solo il codice, i risultati e le brevi citazioni del digest. Per rifare tutto:
+
+1. scarica `ritz_carlton_reviews.csv` dalla pagina Kaggle e mettilo in `data/input/`;
+2. ricrea la divisione sviluppo/test con `python valutazione/crea_split.py` (scrive `data/dev/`, `data/test/` e controlla gli identificativi di `data/valutazione/test_ids.txt`);
+3. se vuoi rifare il gold set da etichettare: `python valutazione/scegli_gold_set.py`.
+
+Le etichette del gold set (`data/valutazione/gold_set.csv`) e gli identificativi di test sono inclusi: non contengono testi.
