@@ -34,11 +34,11 @@ Dalla cartella del progetto:
    docker compose run --rm esegui
    ```
 
-   Il container importa il workflow in n8n, crea la credenziale OpenAI leggendo la chiave dal `.env` ed esegue tutto. Sull'archivio completo ci vuole circa mezz'ora: quasi tutto il tempo va nel guardrail che controlla le recensioni una per una.
+   Il container importa il workflow in n8n, crea la credenziale OpenAI leggendo la chiave dal `.env` ed esegue tutto. Sull'archivio completo il primo giro dura circa mezz'ora (misurato: 29,7 minuti, 1,29 dollari): quasi tutto il tempo va nel guardrail che controlla le recensioni una per una. I giri successivi riprendono tutto dalla memoria e durano una ventina di secondi (vedi «Dopo la relazione» più sotto).
 
 3. I risultati sono in `data/output/`. Un giro riuscito finisce con l'esecuzione segnata come riuscita e con 1.927 oggetti in `recensioni_analizzate.json`.
 
-   **Attenzione:** un nuovo giro sovrascrive i risultati di questo repository. Per conservarli, copia prima la cartella o usa un'altra cartella di uscita (`-e OUTPUT_DIR=/files/nuovo_giro`). I numeri di un nuovo giro saranno vicini ma non identici, perché il modello non risponde sempre allo stesso modo (relazione, sezione 9).
+   **Attenzione:** un nuovo giro sovrascrive i risultati di questo repository, che sono quelli citati nella relazione. Per conservarli, copia prima la cartella o usa un'altra cartella di uscita (`-e OUTPUT_DIR=/files/nuovo_giro`). I numeri del primo nuovo giro saranno vicini ma non identici, perché il modello non risponde sempre allo stesso modo (relazione, sezione 9). Per esempio, in una prova del 16/11 le segnalazioni sono state 257 contro 266. Dal secondo giro in poi i risultati restano identici, perché si riprendono dalla memoria.
 
    I file:
 
@@ -54,6 +54,8 @@ Dalla cartella del progetto:
    | `registro_giro.json` | durata del giro, token e costo per fase (il guardrail con il modello e' una stima) |
    | `tabella_recensioni_aspetti.csv` | per Tableau, Excel o Power BI: una riga per ogni coppia recensione-aspetto, più una riga con l'aspetto vuoto per ogni recensione senza aspetti |
    | `tabella_aspetti_per_periodo.csv` | per Tableau, Excel o Power BI: una riga per ogni coppia periodo-aspetto, con i conteggi |
+   | `recensioni_hotel.xlsx` | file Excel con 7 fogli: mesi, confronti, temi per mese, lingue, segnalazioni, recensioni (senza testo) e una guida alla lettura. Lo crea il prossimo giro: i risultati in questa cartella sono quelli della relazione, fatti prima di questa aggiunta |
+   | `memoria_analisi.json`, `memoria_guardrail.json` | la memoria per i giri successivi; si creano al primo giro |
 
 ### Elenco fisso degli aspetti
 
@@ -86,6 +88,32 @@ Poi apri http://localhost:5678. Al primo accesso n8n chiede di creare un utente 
 ```bash
 docker compose down
 ```
+
+## Dopo la relazione: tre aggiunte
+
+Queste parti sono nate nella versione per le app ([recensioni-app-n8n](https://github.com/aletafuro/recensioni-app-n8n)) e sono state riportate qui perché servono anche a un archivio di recensioni. La relazione descrive il sistema prima di queste aggiunte.
+
+**1. Memoria delle analisi.** Si mandano al modello solo le recensioni nuove o cambiate.
+- Per ogni recensione `memoria_analisi.json` tiene la risposta del modello e una «firma»: istruzioni, elenco degli aspetti, categorie di segnalazione, modello, impostazioni della richiesta, dimensione dei gruppi e testo.
+- Se la firma cambia, la recensione si rianalizza da sola. Un nuovo elenco degli aspetti o un nuovo contesto fanno rianalizzare tutto.
+- Il controllo della manipolazione ha la sua memoria (`memoria_guardrail.json`).
+- Validazione, controllo delle prove e regole si rifanno a ogni giro.
+- Misurato il 16/11 sulle 1.927 recensioni: primo giro 29,7 minuti e 1,29 dollari; secondo giro 18 secondi e meno di un centesimo, con le 1.927 recensioni identiche campo per campo e l'aggregazione identica.
+- Per rianalizzare tutto a mano basta cancellare i due file della memoria.
+- Limite: con `BATCH_SIZE=5` la firma non tiene conto delle recensioni vicine nello stesso gruppo. Se si aggiungono recensioni, quelle già analizzate non vengono rifatte anche se i loro vicini sarebbero cambiati.
+
+**2. Andamento mese per mese.** In `aggregazione.json` (`periodi_di_calendario`) e nel foglio «Mesi» dell'Excel.
+- Ogni mese, dal primo all'ultimo con recensioni, ha la quota di recensioni negative confrontata con il mese prima. Anche i mesi vuoti restano nella serie.
+- Il test su due proporzioni si fa solo se tutti e due i mesi hanno almeno 20 recensioni, con correzione per i confronti multipli; sotto si scrive «pochi dati».
+- Il primo e l'ultimo mese sono segnati quando i dati li coprono solo in parte.
+- Sull'archivio (256 mesi, dall'ottobre 2002 al gennaio 2024): 238 confronti con pochi dati, 17 entro il rumore, nessuno oltre il rumore.
+
+**3. File Excel** (`recensioni_hotel.xlsx`), con 7 fogli:
+- una guida alla lettura;
+- mesi, confronti, temi per mese, lingue, segnalazioni;
+- una riga per recensione, **senza il testo**, perché i testi hanno la loro licenza e si scaricano a parte (vedi «Dati»).
+
+È costruito dal workflow senza librerie esterne. L'ho aperto con Excel senza errori.
 
 ## Verifica del sistema
 

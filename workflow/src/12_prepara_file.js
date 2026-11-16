@@ -168,7 +168,8 @@ const voci = {
 };
 for (const v of Object.values(voci)) v.costo_usd = costo(v);
 // stima per il guardrail con il modello: una chiamata per ogni recensione non gia' fermata dalle espressioni regolari
-const nelGuardrail = pronte.filter((r) => !(r.guardrail_scattati ?? []).some((c) => c !== 'jailbreak'));
+// (solo le recensioni controllate in questo giro: le altre hanno l'esito dalla memoria del guardrail)
+const nelGuardrail = pronte.filter((r) => !r.guardrail_dalla_memoria && !(r.guardrail_scattati ?? []).some((c) => c !== 'jailbreak'));
 const stimaGuardrail = {
   chiamate: nelGuardrail.length + 1,
   token_input: Math.round(nelGuardrail.reduce((t, r) => t + (1300 + r.title.length + r.text.length) / 4, 0) + (1300 + digestFinale.digest.length) / 4),
@@ -178,6 +179,14 @@ const stimaGuardrail = {
 stimaGuardrail.costo_usd = costo(stimaGuardrail);
 const misurato = Object.values(voci).reduce((t, v) => ({ token_input: t.token_input + v.token_input, token_output: t.token_output + v.token_output, costo_usd: t.costo_usd + v.costo_usd }), { token_input: 0, token_output: 0, costo_usd: 0 });
 const fine = new Date();
+const analisiMemoria = $('Valida e completa').first().json._memoria ?? null;
+// memoria del guardrail «manipolazione»: esito di ogni recensione con la sua firma (gli errori tecnici no)
+const guardrailMemoria = {
+  versione_formato: 1,
+  aggiornata_il: new Date().toISOString(),
+  voci: Object.fromEntries(pronte.filter((r) => r.guardrail_firma && !r.guardrail_errore)
+    .map((r) => [r.review_id, { firma: r.guardrail_firma, sospetta: !!r.sospetta, scattati: r.guardrail_scattati ?? [] }])),
+};
 const registroGiro = {
   inizio: cfg.started_at,
   fine: fine.toISOString(),
@@ -186,6 +195,11 @@ const registroGiro = {
   prezzi_usd_per_milione_di_token: { input: cfg.prezzo_input_usd_per_milione, output: cfg.prezzo_output_usd_per_milione },
   recensioni: analisi.length,
   versione_aspetti: tax.versione_aspetti,
+  // memoria: quante recensioni sono state riprese dal giro prima e quante mandate al modello
+  analisi_riprese_dalla_memoria: info_analisi.dalla_memoria ?? 0,
+  analisi_mandate_al_modello: info_analisi.analizzate_in_questo_giro ?? null,
+  guardrail_ripresi_dalla_memoria: pronte.filter((r) => r.guardrail_dalla_memoria).length,
+  guardrail_controllati_in_questo_giro: pronte.filter((r) => !r.guardrail_dalla_memoria).length,
   misurato_per_fase: voci,
   misurato_totale: { ...misurato, costo_usd: Math.round(1e4 * misurato.costo_usd) / 1e4 },
   guardrail_stimato: stimaGuardrail,
@@ -212,6 +226,9 @@ return [
   file('tabella_aspetti_per_periodo.csv', tabellaCsv(['periodo', 'recensioni_del_periodo', 'aspetto', 'nome_aspetto', 'menzioni', 'positive', 'negative', 'neutral', 'pct_recensioni_che_lo_apprezzano', 'pct_recensioni_che_lo_criticano'], righePeriodi), 'text/csv'),
   file('esecuzione.json', JSON.stringify(esecuzione, null, 2), 'application/json'),
   file('registro_giro.json', JSON.stringify(registroGiro, null, 2), 'application/json'),
+  // memorie per il giro dopo (vedi «Prepara richieste analisi» e «Prepara controllo manipolazione»)
+  ...(analisiMemoria ? [file('memoria_analisi.json', JSON.stringify(analisiMemoria), 'application/json')] : []),
+  file('memoria_guardrail.json', JSON.stringify(guardrailMemoria), 'application/json'),
   // dettaglio per recensione, fuori dallo schema richiesto: serve a controllare e a verificare
   file('recensioni_diagnostica.jsonl', analisi.map((r, i) => JSON.stringify({
     review_id: r.review_id,

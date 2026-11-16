@@ -14,16 +14,35 @@ if (puliti.length !== originali.length) {
   throw new Error(`Il guardrail dati sensibili ha restituito ${puliti.length} recensioni su ${originali.length}`);
 }
 
+// il guardrail riceve solo le recensioni nuove o cambiate (nodo «Prepara controllo manipolazione»): la posizione
+// di ogni suo esito si riporta alla posizione della recensione con indice_originale
+const inviate = $('Prepara controllo manipolazione').all().map((i) => i.json.indice_originale);
 const indice = (it) => {
   const p = Array.isArray(it.pairedItem) ? it.pairedItem[0] : it.pairedItem;
-  return p?.item;
+  return inviate[p?.item] ?? null;
 };
 const esito = new Map();
-for (const it of $('Guardrail: manipolazione').all(0)) esito.set(indice(it), { sospetta: false, checks: it.json.checks ?? [] });
+for (const it of $('Guardrail: manipolazione').all(0)) {
+  const i = indice(it);
+  if (i !== null) esito.set(i, { sospetta: false, checks: it.json.checks ?? [] });
+}
 for (const it of $('Guardrail: manipolazione').all(1)) {
   // un errore tecnico del guardrail non rende sospetta la recensione
+  const i = indice(it);
+  if (i === null) continue;
   const errore = it.json.error ?? null;
-  esito.set(indice(it), { sospetta: !errore, errore, checks: it.json.checks ?? [] });
+  esito.set(i, { sospetta: !errore, errore, checks: it.json.checks ?? [] });
+}
+// le altre: esito dalla memoria (stessa firma del nodo «Prepara controllo manipolazione»)
+const crypto = require('crypto');
+const FIRMA_CONFIGURAZIONE = '__FIRMA_GUARDRAIL_MANIPOLAZIONE__';
+const modello = $env.GUARDRAIL_MODEL || 'gpt-4.1-mini';
+const firma = (testo) => crypto.createHash('sha1').update(JSON.stringify([FIRMA_CONFIGURAZIONE, modello, testo]), 'utf8').digest('hex');
+let memoria = {};
+try {
+  memoria = $('Estrai memoria guardrail').first().json.data?.voci ?? {};
+} catch (e) {
+  memoria = {};
 }
 
 const SEGNAPOSTO = /<([A-Z_]+)>/g;
@@ -34,17 +53,35 @@ return originali.map((r, i) => {
   const text = pos >= 0 ? testoPulito.slice(pos + SEPARATORE.length) : testoPulito;
   const oscurati = {};
   for (const m of testoPulito.matchAll(SEGNAPOSTO)) oscurati[m[1]] = (oscurati[m[1]] ?? 0) + 1;
-  const e = esito.get(i) ?? { sospetta: false, checks: [], errore: 'esito mancante' };
-  const scattati = e.checks.filter((c) => c.triggered).map((c) => c.name);
+  const f = firma(testoPulito);
+  const m = memoria[r.review_id];
+  let sospetta, scattati, errore, dallaMemoria = false;
+  if (esito.has(i)) {
+    const e = esito.get(i);
+    sospetta = e.sospetta;
+    scattati = e.checks.filter((c) => c.triggered).map((c) => c.name);
+    errore = e.errore ?? null;
+  } else if (m && m.firma === f) {
+    sospetta = !!m.sospetta;
+    scattati = m.scattati ?? [];
+    errore = null;
+    dallaMemoria = true;
+  } else {
+    sospetta = false;
+    scattati = [];
+    errore = 'esito mancante';
+  }
   return {
     json: {
       ...r,
       title,
       text,
       dati_oscurati: oscurati,
-      sospetta: e.sospetta,
+      sospetta,
       guardrail_scattati: scattati,
-      guardrail_errore: e.errore ?? null,
+      guardrail_errore: errore,
+      guardrail_firma: f,
+      guardrail_dalla_memoria: dallaMemoria,
     },
   };
 });

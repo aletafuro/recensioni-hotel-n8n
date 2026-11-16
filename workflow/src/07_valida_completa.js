@@ -30,10 +30,35 @@ const valido = (g) =>
   Array.isArray(g.aspects) &&
   Array.isArray(g.attention);
 
-// --- 1. risposte del primo giro
+// --- 0. memoria delle analisi: le recensioni con la stessa firma del giro prima riprendono la risposta salvata
+// (stessa firma del nodo «Prepara richieste analisi»: istruzioni, elenco, categorie, modello, gruppi, testo)
+const crypto = require('crypto');
+const firma = (r) => crypto.createHash('sha1').update(JSON.stringify([tax.system_prompt, tax.body_base, cfg.batch_size, payload(r)]), 'utf8').digest('hex');
+let memoria = {};
+try {
+  memoria = $('Estrai memoria analisi').first().json.data?.voci ?? {};
+} catch (e) {
+  memoria = {};
+}
 const grezzi = new Map();
+const ritentataNellaMemoria = new Set();
+const firme = new Map();
+for (const r of recensioni) {
+  if (r.vuota || r.duplicato_di) continue;
+  const f = firma(r);
+  firme.set(r.review_id, f);
+  const m = memoria[r.review_id];
+  if (m && m.firma === f && valido(m.risposta)) {
+    grezzi.set(r.review_id, m.risposta);
+    if (m.ritentata) ritentataNellaMemoria.add(r.review_id);
+  }
+}
+const dallaMemoria = grezzi.size;
+
+// --- 1. risposte del primo giro (solo le recensioni nuove o cambiate)
 let risposteNonValide = 0;
-for (const it of $input.all()) {
+const richieste = $input.all().filter((it) => !it.json?.nessuna_richiesta);
+for (const it of richieste) {
   const content = it.json?.choices?.[0]?.message?.content;
   let dati = null;
   try {
@@ -215,7 +240,7 @@ function costruisci(r, g, stato) {
 const risultati = new Map();
 for (const r of daAnalizzare) {
   const g = grezzi.get(r.review_id);
-  if (g) risultati.set(r.review_id, costruisci(r, g, ritentate.has(r.review_id) ? 'ritentata' : 'ok'));
+  if (g) risultati.set(r.review_id, costruisci(r, g, ritentate.has(r.review_id) || ritentataNellaMemoria.has(r.review_id) ? 'ritentata' : 'ok'));
   else {
     // analisi non riuscita dopo i ritentativi: nessun giudizio inventato,
     // la recensione viene segnalata perche' qualcuno la legga
@@ -240,11 +265,21 @@ for (const r of recensioni) {
   }
 }
 
+// memoria aggiornata: una voce per ogni recensione con una risposta valida (le fallite si riprovano al giro dopo)
+const voci = {};
+for (const r of daAnalizzare) {
+  const g = grezzi.get(r.review_id);
+  if (g) voci[r.review_id] = { firma: firme.get(r.review_id), ritentata: ritentate.has(r.review_id) || ritentataNellaMemoria.has(r.review_id), risposta: g };
+}
+
 const out = recensioni.map((r) => risultati.get(r.review_id));
 out[0] = {
   ...out[0],
+  _memoria: { versione_formato: 1, aggiornata_il: new Date().toISOString(), voci },
   _analisi: {
-    richieste_primo_giro: $input.all().length,
+    dalla_memoria: dallaMemoria,
+    analizzate_in_questo_giro: daAnalizzare.length - dallaMemoria,
+    richieste_primo_giro: richieste.length,
     uso_token_ritentativi: usoToken,
     risposte_non_valide: risposteNonValide,
     recensioni_ritentate: [...ritentate],

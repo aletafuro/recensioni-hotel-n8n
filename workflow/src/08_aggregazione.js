@@ -328,6 +328,71 @@ const elencoAspetti = (() => {
   };
 })();
 
+// --- andamento mese per mese (mesi del calendario, non uniti come i periodi qui sopra)
+// Per ogni mese dal primo all'ultimo con recensioni (anche i mesi vuoti restano nella serie, cosi' «il mese prima»
+// e' sempre quello del calendario): recensioni, voto medio, sentiment. Confronto con il mese prima sulla quota di
+// recensioni negative: test su due proporzioni solo se tutti e due i mesi hanno almeno 20 recensioni (sotto:
+// «pochi dati», numeri senza verdetto), correzione di Benjamini-Hochberg (FDR 10%) su tutti i confronti fatti.
+// L'archivio e' storico: la serie finisce all'ultimo mese con dati; il primo e l'ultimo mese sono segnati se i dati
+// li coprono solo in parte.
+const MIN_RECENSIONI_CONFRONTO = 20;
+const periodiCalendario = (() => {
+  const conData = valide.filter((r) => r.published_date);
+  if (!conData.length) return null;
+  const giorni = conData.map((r) => String(r.published_date).slice(0, 10)).sort();
+  const primaData = giorni[0], ultimaData = giorni[giorni.length - 1];
+  const successivo = (k) => { const [a, m] = k.split('-').map(Number); return m === 12 ? `${a + 1}-01` : `${a}-${String(m + 1).padStart(2, '0')}`; };
+  const ultimoGiorno = (k) => { const [a, m] = k.split('-').map(Number); return new Date(Date.UTC(a, m, 0)).toISOString().slice(0, 10); };
+  const gruppi = new Map();
+  for (const r of conData) {
+    const k = String(r.published_date).slice(0, 7);
+    if (!gruppi.has(k)) gruppi.set(k, []);
+    gruppi.get(k).push(r);
+  }
+  const primo = primaData.slice(0, 7), ultimo = ultimaData.slice(0, 7);
+  const periodi = [];
+  for (let k = primo; k <= ultimo; k = successivo(k)) {
+    const l = gruppi.get(k) ?? [];
+    const neg = l.filter((r) => r.overall_sentiment === 'negative').length;
+    periodi.push({
+      periodo: k,
+      in_corso: false,
+      dati_solo_dal: k === primo && primaData > `${k}-01` ? primaData : null,
+      dati_fino_al: k === ultimo && ultimaData < ultimoGiorno(k) ? ultimaData : null,
+      recensioni: l.length,
+      voto_medio: media(l.filter((r) => r.rating !== null).map((r) => r.rating)),
+      positive: l.filter((r) => r.overall_sentiment === 'positive').length,
+      negative: neg,
+      miste: l.filter((r) => r.overall_sentiment === 'mixed').length,
+      neutre: l.filter((r) => r.overall_sentiment === 'neutral').length,
+      pct_negative: pct(neg, l.length),
+    });
+  }
+  const confronti = [];
+  periodi.forEach((p, i) => {
+    if (i === 0) return;
+    const q = periodi[i - 1];
+    const c = { periodo_prima: q.periodo, pct_negative_prima: q.pct_negative, differenza_punti: p.pct_negative !== null && q.pct_negative !== null ? Math.round(10 * (p.pct_negative - q.pct_negative)) / 10 : null };
+    if (p.recensioni >= MIN_RECENSIONI_CONFRONTO && q.recensioni >= MIN_RECENSIONI_CONFRONTO) {
+      Object.assign(c, dueProporzioni(p.negative, p.recensioni, q.negative, q.recensioni));
+      c.p_value = Number(c.p_value.toPrecision(3));
+      confronti.push(c);
+    } else {
+      c.esito = 'pochi dati';
+    }
+    p.confronto = c;
+  });
+  // Benjamini-Hochberg (FDR 10%) sui confronti fatti
+  const ordinati = [...confronti].sort((a, b) => a.p_value - b.p_value);
+  let soglia = -1;
+  ordinati.forEach((x, i) => { if (x.p_value <= ((i + 1) / ordinati.length) * 0.1) soglia = i; });
+  ordinati.forEach((x, i) => { x.significativo = i <= soglia; x.esito = x.significativo ? 'oltre il rumore' : 'entro il rumore'; });
+  return {
+    regola: `quota di recensioni negative di ogni mese contro il mese prima; test su due proporzioni solo con almeno ${MIN_RECENSIONI_CONFRONTO} recensioni in tutti e due i mesi, correzione Benjamini-Hochberg (FDR 10%); dal ${primaData} al ${ultimaData}`,
+    mesi: [{ piattaforma: 'tutte', periodi }],
+  };
+})();
+
 const aggregazione = {
   meta: {
     generato_il: new Date().toISOString(),
@@ -370,6 +435,7 @@ const aggregazione = {
   andamento,
   serie_annuale: serieAnnuale,
   segnalazioni,
+  periodi_di_calendario: periodiCalendario,
 };
 
 return [{ json: { aggregazione, info_analisi: infoAnalisi } }];
