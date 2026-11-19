@@ -9,6 +9,17 @@ Workflow n8n che legge l'archivio delle recensioni di un hotel e produce, senza 
 
 Le scelte progettuali, i limiti e la verifica su recensioni non usate durante lo sviluppo sono nella [relazione tecnica](RELAZIONE.md).
 
+![Il workflow in n8n: lettura e guardrail, aspetti, analisi di ogni recensione, aggregazione e digest](docs/workflow_n8n.png)
+
+*Il workflow nell'interfaccia di n8n, con le sue quattro fasi (versione della relazione: memoria ed Excel sono arrivati dopo).*
+
+**In breve.**
+- 1.927 recensioni analizzate in meno di mezz'ora, per 1,29 dollari. Dal secondo giro bastano 18 secondi, perché le analisi si riprendono dalla memoria.
+- Su 50 recensioni mai usate durante lo sviluppo, il giudizio complessivo coincide con quello di riferimento nel 90% dei casi (kappa di Cohen 0,83). Il riferimento l'ha dato alla cieca un modello diverso, non una persona.
+- Sulle stesse 50 recensioni, le 12 da segnalare alla direzione per un problema preciso vengono trovate tutte; delle 20 segnalate, 12 sono giuste. I numeri sono piccoli: è un primo segnale, non una misura definitiva.
+- Fra le recensioni usate per lo sviluppo e quelle tenute da parte nessuna differenza supera il rumore: il sistema non è tarato sulle recensioni viste.
+- Un esempio dei risultati per chi non usa n8n: il file Excel in [`data/esempio_excel/`](data/esempio_excel/recensioni_hotel.xlsx).
+
 **Il passo successivo.** Questo è il primo prototipo: un archivio di recensioni analizzato una volta. La versione per le app, che scarica da sola le recensioni da App Store e Google Play ogni settimana, manda avvisi su Telegram e controlla le recensioni coordinate, è nel repository [recensioni-app-n8n](https://github.com/aletafuro/recensioni-app-n8n).
 
 ## Cosa serve
@@ -51,10 +62,10 @@ Dalla cartella del progetto:
    | `digest.md` | testo per la direzione |
    | `esecuzione.json` | diagnostica: anomalie del file, guardrail, ritentativi, verifiche del digest |
    | `recensioni_diagnostica.jsonl` | dettaglio per recensione: segnalazioni con la frase di prova, temi fuori elenco |
-   | `registro_giro.json` | durata del giro, token e costo per fase (il guardrail con il modello e' una stima) |
+   | `registro_giro.json` | durata del giro, token e costo per fase (il guardrail con il modello è una stima) |
    | `tabella_recensioni_aspetti.csv` | per Tableau, Excel o Power BI: una riga per ogni coppia recensione-aspetto, più una riga con l'aspetto vuoto per ogni recensione senza aspetti |
    | `tabella_aspetti_per_periodo.csv` | per Tableau, Excel o Power BI: una riga per ogni coppia periodo-aspetto, con i conteggi |
-   | `recensioni_hotel.xlsx` | file Excel con 7 fogli: mesi, confronti, temi per mese, lingue, segnalazioni, recensioni (senza testo) e una guida alla lettura. Lo crea il prossimo giro: i risultati in questa cartella sono quelli della relazione, fatti prima di questa aggiunta |
+   | `recensioni_hotel.xlsx` | file Excel con 7 fogli: mesi, confronti, temi per mese, lingue, segnalazioni, recensioni (senza testo) e una guida alla lettura. Lo crea il prossimo giro: i risultati in questa cartella sono quelli della relazione, fatti prima di questa aggiunta. Un esempio è in `data/esempio_excel/` |
    | `memoria_analisi.json`, `memoria_guardrail.json` | la memoria per i giri successivi; si creano al primo giro |
 
 ### Elenco fisso degli aspetti
@@ -114,6 +125,8 @@ Queste parti sono nate nella versione per le app ([recensioni-app-n8n](https://g
 - una riga per recensione, **senza il testo**, perché i testi hanno la loro licenza e si scaricano a parte (vedi «Dati»).
 
 È costruito dal workflow senza librerie esterne. L'ho aperto con Excel senza errori.
+
+Un esempio è in [`data/esempio_excel/recensioni_hotel.xlsx`](data/esempio_excel/recensioni_hotel.xlsx). Viene dal giro del 16/11, non da quello della relazione: per questo i numeri sono vicini ma non identici (per esempio 257 segnalazioni invece di 266).
 
 ## Verifica del sistema
 
@@ -179,11 +192,14 @@ workflow/
   src/*.js                  codice dei nodi Code, uno per file
   build_workflow.py         rimonta il workflow da src/ (serve solo se si modifica il codice)
 data/
-  input/                    archivio delle recensioni
-  output/                   risultati dell'ultima esecuzione completa
-  dev/, test/               divisione sviluppo / test usata per la verifica
+  input/                    archivio delle recensioni (non incluso: si scarica da Kaggle, vedi «Dati»)
+  output/                   risultati del giro citato nella relazione
+  esempio_excel/            il file Excel di un giro successivo, come esempio
+  dev/, test/               divisione sviluppo / test (non inclusa: si ricrea con valutazione/crea_split.py)
 valutazione/                script e risultati della verifica su recensioni non usate nello sviluppo
 RELAZIONE.md                relazione tecnica
+docs/                       immagine del workflow
+LICENSE                     licenza del codice (MIT)
 ```
 
 ## Modificare il workflow
@@ -200,10 +216,14 @@ e lo si rilancia: a ogni avvio il container reimporta il workflow aggiornato. Ch
 
 Dataset: [Ritz Carlton New York: 1900+ TripAdvisor Reviews](https://www.kaggle.com/datasets/kanchana1990/ritz-carlton-ny-2k-tripadvisor-reviews) di Kanchana1990 su Kaggle, licenza ODC Attribution License (ODC-By), 1.927 recensioni pubblicate su TripAdvisor.
 
-**I testi delle recensioni non sono in questo repository.** La licenza del dataset permette di ridistribuirlo citando la fonte, ma le recensioni vengono da TripAdvisor, che ha i suoi termini d'uso: per prudenza qui ci sono solo il codice, i risultati e le brevi citazioni del digest. Per rifare tutto:
+**I testi delle recensioni non sono in questo repository.** La licenza del dataset permette di ridistribuirlo citando la fonte, ma le recensioni vengono da TripAdvisor, che ha i suoi termini d'uso: per prudenza qui non c'è l'archivio. Ci sono il codice, i risultati e alcune frasi brevi: le citazioni del digest e, per le recensioni segnalate, la frase che giustifica la segnalazione (in `recensioni_diagnostica.jsonl` e nel foglio Segnalazioni dell'Excel). Per rifare tutto:
 
 1. scarica `ritz_carlton_reviews.csv` dalla pagina Kaggle e mettilo in `data/input/`;
 2. ricrea la divisione sviluppo/test con `python valutazione/crea_split.py` (scrive `data/dev/`, `data/test/` e controlla gli identificativi di `data/valutazione/test_ids.txt`);
 3. se vuoi rifare il gold set da etichettare: `python valutazione/scegli_gold_set.py`.
 
 Le etichette del gold set (`data/valutazione/gold_set.csv`) e gli identificativi di test sono inclusi: non contengono testi.
+
+## Licenza
+
+Il codice è distribuito con licenza MIT (vedi `LICENSE`). Il dataset ha la sua licenza (ODC-By, vedi «Dati»).
