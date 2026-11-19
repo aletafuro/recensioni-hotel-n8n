@@ -1,6 +1,6 @@
 # Analisi delle recensioni di un hotel con n8n
 
-Workflow n8n che legge l'archivio delle recensioni di un hotel e produce, senza interventi manuali:
+È un workflow n8n che legge l'archivio delle recensioni di un hotel e produce senza interventi manuali:
 
 - l'analisi di ogni recensione (lingua, sentiment complessivo, sentiment per aspetto, segnalazione per la direzione con il motivo);
 - l'elenco degli aspetti emersi dalle recensioni, con una descrizione;
@@ -47,7 +47,7 @@ Dalla cartella del progetto:
 
    Il container importa il workflow in n8n, crea la credenziale OpenAI leggendo la chiave dal `.env` ed esegue tutto. Sull'archivio completo il primo giro dura circa mezz'ora (misurato: 29,7 minuti, 1,29 dollari): quasi tutto il tempo va nel guardrail che controlla le recensioni una per una. I giri successivi riprendono tutto dalla memoria e durano una ventina di secondi (vedi «Dopo la relazione» più sotto).
 
-3. I risultati sono in `data/output/`. Un giro riuscito finisce con l'esecuzione segnata come riuscita e con 1.927 oggetti in `recensioni_analizzate.json`.
+3. I risultati sono in `data/output/`. Alla fine di un giro riuscito n8n segna l'esecuzione come riuscita e `recensioni_analizzate.json` contiene 1.927 oggetti.
 
    **Attenzione:** un nuovo giro sovrascrive i risultati di questo repository, che sono quelli citati nella relazione. Per conservarli, copia prima la cartella o usa un'altra cartella di uscita (`-e OUTPUT_DIR=/files/nuovo_giro`). I numeri del primo nuovo giro saranno vicini ma non identici, perché il modello non risponde sempre allo stesso modo (relazione, sezione 9). Per esempio, in una prova del 16/11 le segnalazioni sono state 257 contro 266. Dal secondo giro in poi i risultati restano identici, perché si riprendono dalla memoria.
 
@@ -70,7 +70,7 @@ Dalla cartella del progetto:
 
 ### Elenco fisso degli aspetti
 
-Gli aspetti usati per l'analisi stanno in `data/aspetti/aspetti_fissi.json`, con una versione: così i numeri di giri diversi si possono confrontare. Il file è nato da una scoperta automatica sulle recensioni (`aspetti_v1.json`) ed è stato poi rivisto. Le modifiche e i loro motivi sono scritti dentro il file. Per questo il giro in `data/output/` non contiene la scoperta: un giro completo con la scoperta degli aspetti è in `data/output_scoperta/`. Si rifà con `docker compose run --rm -e RISCOPRI_ASPETTI=true -e OUTPUT_DIR=/files/output_scoperta esegui`.
+Gli aspetti usati per l'analisi stanno in `data/aspetti/aspetti_fissi.json`, con una versione: così i numeri di giri diversi si possono confrontare. Il file è nato da una scoperta automatica sulle recensioni (`aspetti_v1.json`) ed è stato poi rivisto. Le modifiche e i loro motivi sono scritti dentro il file. Il giro in `data/output/` usa questo elenco, quindi non contiene la scoperta. Un giro completo con la scoperta degli aspetti è in `data/output_scoperta/` e si rifà con `docker compose run --rm -e RISCOPRI_ASPETTI=true -e OUTPUT_DIR=/files/output_scoperta esegui`.
 
 Per far emergere di nuovo gli aspetti dalle recensioni, senza usare l'elenco fisso:
 
@@ -78,7 +78,7 @@ Per far emergere di nuovo gli aspetti dalle recensioni, senza usare l'elenco fis
 docker compose run --rm -e RISCOPRI_ASPETTI=true esegui
 ```
 
-Con un file di recensioni di un'altra attività, l'elenco fisso non c'è, oppure si toglie: in quel caso il workflow fa sempre la scoperta.
+Con le recensioni di un'altra attività l'elenco fisso non c'è (oppure va tolto): in quel caso il workflow fa sempre la scoperta.
 
 ### Prova veloce
 
@@ -140,7 +140,7 @@ La verifica non chiama il modello, ma Docker Compose chiede comunque che `OPENAI
 
 Il workflow **Verifica del sistema (metriche)** legge i risultati in `data/output/` e scrive accanto `valutazione.json` e `valutazione.md`. Contengono:
 
-- **A. sviluppo contro test:** le recensioni di test (`data/valutazione/test_ids.txt`) non sono mai state usate durante lo sviluppo; se il sistema fosse tarato su quelle viste, sul test peggiorerebbe;
+- **A. sviluppo contro test:** le recensioni di test (`data/valutazione/test_ids.txt`) non sono mai state usate durante lo sviluppo; se il sistema fosse tarato sulle recensioni viste durante lo sviluppo, sul test andrebbe peggio;
 - **B. gold set:** accuratezza rispetto alle 50 recensioni di test etichettate in `data/valutazione/gold_set.csv`.
 
 Le stesse metriche le calcola, in modo indipendente, lo script Python `valutazione/verifica_generalizzazione.py` (controllo incrociato).
@@ -156,7 +156,7 @@ Con l'interfaccia accesa (`docker compose up -d n8n`):
 ## Se qualcosa non va
 
 - **Linux, errore di permessi su `data/`:** il container scrive con l'utente `node` (uid 1000). Se il tuo utente ha un uid diverso, dai i permessi di scrittura alla cartella: `chmod -R a+w data`.
-- **Il giro si interrompe** (rete, limiti dell'API): basta rilanciarlo: il giro ricomincia da capo. Dentro un giro, le recensioni la cui analisi fallisce vengono già ritentate da sole.
+- **Il giro si interrompe** (rete, limiti dell'API): basta rilanciarlo e ricomincia da capo. Dentro un giro, le recensioni la cui analisi fallisce vengono già ritentate da sole.
 - **Il file `docker-compose.override.yml`**, se presente, serve solo sul computer dell'autrice e va cancellato: Docker Compose lo caricherebbe da solo.
 
 ## Configurazione
