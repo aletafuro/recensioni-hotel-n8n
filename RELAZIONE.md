@@ -91,7 +91,7 @@ Se una delle due condizioni scatta, l'aggregazione scrive che l'elenco va rivist
 
 La persona viene informata e può tornare indietro, ma non è un passaggio obbligato. La regola di adozione è decisa prima ed è uguale ogni volta, invece di dipendere dal giudizio del momento.
 
-Due di questi controlli sono nati da un errore. Ho costruito la procedura nel progetto per la produzione, e la prima versione aveva solo il test di stabilità su 60 recensioni prese a caso. Alla prima prova ha adottato un aspetto nuovo, «truffa», che si sovrapponeva ai profili falsi: 6 delle 10 recensioni che parlavano di truffa erano già classificate lì. Il test non se n'era accorto, perché nel campione a caso le recensioni su quel tema erano pochissime. Ho annullato la nuova versione e ho aggiunto il controllo sulla sovrapposizione e il campione stratificato. La stessa prova ha mostrato anche quanto varia il modello da un giro all'altro (sezione 9).
+Due di questi controlli sono nati da un errore. Ho costruito la procedura nel progetto per la produzione, e la prima versione aveva solo il test di stabilità su 60 recensioni prese a caso. Alla prima prova ha adottato un aspetto nuovo che si sovrapponeva a uno già esistente: 6 delle 10 recensioni che parlavano del nuovo tema erano già classificate nell'aspetto vecchio. Il test non se n'era accorto, perché nel campione a caso le recensioni su quel tema erano pochissime. Ho annullato la nuova versione e ho aggiunto il controllo sulla sovrapposizione e il campione stratificato. La stessa prova ha mostrato anche quanto varia il modello da un giro all'altro (sezione 9).
 
 ### 4.3 L'analisi di ogni recensione
 
@@ -159,7 +159,7 @@ Due lezioni sono venute dalle prove.
 
 All'inizio l'hotel era scritto dentro i prompt in tre punti. Gli aspetti emergevano già dai dati, ma le categorie di segnalazione erano pensate per un hotel, e un'altra attività ha problemi diversi. Ho spostato tutto ciò che riguarda il dominio in un file, `data/contesto/contesto.json`: che cosa viene recensito, chi scrive, chi legge, la lingua del digest, la scala del voto, le critiche ordinarie da non segnalare, le categorie di segnalazione con nome, priorità e definizione. Tutti i prompt leggono il dominio da lì. Il file non elenca servizi né aspetti, perché il modello tenderebbe a vederli anche dove non ci sono.
 
-Per verificarlo ho fatto girare lo stesso workflow, cambiando solo quel file, su 500 recensioni pubbliche di un'app. Ha funzionato senza toccare il workflow, e gli aspetti sono emersi da soli (pagamenti, autenticità dei profili, qualità dell'app...). Questa prova ha fatto scoprire il problema del guardrail descritto sopra e un problema di virgolette nel digest, corretti anche nel progetto dell'hotel, e il limite dell'identificativo con i testi brevi (sezione 4.1).
+Per verificarlo ho fatto girare lo stesso workflow, cambiando solo quel file, su 500 recensioni pubbliche di un'app. Ha funzionato senza toccare il workflow, e gli aspetti sono emersi da soli (pagamenti, funzionalità, usabilità, qualità dell'app...). Questa prova ha fatto scoprire il problema del guardrail descritto sopra e un problema di virgolette nel digest, corretti anche nel progetto dell'hotel, e il limite dell'identificativo con i testi brevi (sezione 4.1).
 
 ## 5. Verifica su recensioni non usate durante lo sviluppo
 
